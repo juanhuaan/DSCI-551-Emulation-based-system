@@ -25,7 +25,7 @@ def index(request):
     filename = 'cars'
 
     data = {"cars3": 3}
-    database.child("data").set(data)
+    database.set(data)
 
     userdata = {"root":
                 {"user":
@@ -36,11 +36,9 @@ def index(request):
     database.set(userdata)
 
     partition1 = database.child("data").child("cars1").get().key()
-    print(partition1)
     part1_location = database.child('root').child('user').child(
         'John').child('cars').child('p1').get()
     value = part1_location.val()
-    print(value)
 
     context = {
         'filename': filename,
