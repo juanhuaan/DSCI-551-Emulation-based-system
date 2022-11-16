@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     # apps
     'home',
     'fireapp',
+    'rest_framework',
+    'realData'
+
 ]
 
 MIDDLEWARE = [
@@ -85,6 +88,9 @@ DATABASES = {
         'PASSWORD': 'Dsci-551',
         'HOST': 'mydbinst.cooxgal4hn3n.us-west-1.rds.amazonaws.com',
         'PORT': '3306',
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+        }
     }
 }
 
