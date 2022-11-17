@@ -3,7 +3,7 @@ from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 class City(models.Model):
-    name = models.CharField(max_length = 10, primary_key=True)
+    name = models.CharField(max_length = 100, primary_key=True)
     rank = models.IntegerField(default = -1)
     population = models.IntegerField()
     class Meta:
