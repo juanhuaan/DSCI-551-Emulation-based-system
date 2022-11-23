@@ -41,7 +41,8 @@ class AllView(APIView):
     """
     Method: DELETE
     URL: localhost:8000/api/restaurants/
-    Discription:
+    
+    Description
     delete all the partitions in certain table for Rest is delete Rest0, Rest1,Rest2
     Returns: HTTP 204
     """
@@ -52,7 +53,10 @@ class AllView(APIView):
             return Response(status= HTTPStatus.NO_CONTENT) 
         except:
             return Response(status = HTTPStatus.BAD_REQUEST)
-   
+    
+    """
+        database create functions
+    """  
     def createRest(self, table, data):
         new = table.objects.create(business_id = data['business_id'],
                                     name = data['name'],
@@ -95,15 +99,14 @@ class RestView(AllView):
     URL: localhost:8000/api/restaurants/
     body: 
         {
-            "path": String "dataSet/test.csv",
-            "k" : Number default is 3
+            "path": [String] "dataSet/test.csv",
+            "k" : [Number default is 3] 0
         }
     Returns: table information in the first Partition Table
         _type_: json string
         fields =['business_id', 'name', 'rate', 'review_cnt', 'city', 
                 'latitude', 'longitude', 'categories']
     """
-    
     def post(self, request):
         path = request.data['path']
         self.k = request.data['k']
@@ -156,7 +159,6 @@ class CityView(AllView):
         }
     Returns: table information in the first Partition Table
     """
-    
     def post(self, request):
         path = request.data['path']
         self.k = request.data['k']
@@ -208,7 +210,6 @@ class UserView(AllView):
         }
     Returns: table information in the first Partition Table
     """
-    
     def post(self, request):
         path = request.data['path']
         self.k = request.data['k']

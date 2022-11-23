@@ -13,6 +13,7 @@ import uuid
 # Create your views here.
 
 class CommandView(APIView):
+    
     """
     Method: POST
     Function: mkdir, put
@@ -156,7 +157,6 @@ class CommandView(APIView):
             "absolute_path": "/", 
             "command": "deleteAllPath"
         }
-    
     """
     def delete(self, request):
         route = request.data['command']
@@ -177,7 +177,9 @@ class CommandView(APIView):
                 Paths.objects.get(inode = obj).delete();
             return Response(status= HTTPStatus.NO_CONTENT)
             
-    
+    """
+    helper functions
+    """
     def get_current_path_inode(self, path):
         path = path.strip()
         if path == "/":
