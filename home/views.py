@@ -15,13 +15,14 @@ import uuid
 class CommandView(APIView):
     """
     Method: POST
-    Fuction: mkdir, put
+    Function: mkdir, put
     URL: localhost:8000/api/commands/
      {
         "absolute_path": "/user",
         "type":"DIRECTORY",
         "command":"mkdir_or_put"
      }
+    return: all the path information
     """
     def post(self, request):
         route = request.data['command']
@@ -78,6 +79,7 @@ class CommandView(APIView):
             "absolute_path": ' /user', 
             "command": 'ls'
         }
+    return: all the subpath information
     
     Func: checkAllPath
     URL: localhost:8000/api/commands/
@@ -86,14 +88,16 @@ class CommandView(APIView):
             "absolute_path": "/user/Amy", 
             "command": "checkAllPath"
         }
+    return: all the paths information
     
     Func: go back to upper directory
     URL: localhost:8000/api/commands/
     body: 
         {
-            "absolute_path": "/user/Amy", 
-            "command": "upper"
+            "absolute_path": "/user/john", 
+            "command": "goback"
         }
+    return: all the paths information
     """
     def get(self, request):
         route = request.data['command']
@@ -143,6 +147,7 @@ class CommandView(APIView):
             "absolute_path": "/marry", 
             "command": "deleteOnePath"
         }
+    return: HTTPCode 204
         
     Fuction: delete all path and relation with this path, ADMIN USED!
     URL: localhost:8000/api/commands/
