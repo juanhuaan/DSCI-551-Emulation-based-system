@@ -1,4 +1,4 @@
-Restaurant name,rating score,review count,city,state,business id,latitude,longitude,categories
+name,rate,review_cnt,city,state,business_id,latitude,longitude,categories
 GRANVILLE,4.5,2238,West Hollywood,CA,cal0Wpupxj9c_AV7WzDXsw,34.0771299,-118.38068," American (New), Cocktail Bars"
 Running Goose,4.5,1477,Los Angeles,CA,RVbZaawgEGmto6TxOoVBdQ,34.10052,-118.32927," Gastropubs, Latin American"
 King Chang - LA,5.0,217,Los Angeles,CA,iRjnWYY5oVJTaZ5teU1vOQ,34.06329,-118.30372," Korean, Barbeque"
@@ -706,7 +706,6 @@ Gucci Osteria da Massimo Bottura,3.5,166,Beverly Hills,CA,2n9gAtOvARpVPygaWH1tTQ
 Founders Ale House,4.5,300,Los Angeles,CA,sQJ788QT7wN5-d4MeuRVQA,34.0550257964308,-118.38336369965," American (New), Sports Bars, Gastropubs"
 The Office Hours,5.0,2,Los Angeles,CA,sW4TXgV9Sl-PMKJHINMkqQ,34.0488662719727,-118.270957946777, Calabrian
 Zuma Pop Up at Inko Nito,5.0,1,Los Angeles,CA,C_3-Xh9AvJx1ugwvPbQ-OA,34.0464475336799,-118.235220206002," Asian Fusion, Sushi Bars, Japanese"
-Prince Street Pizza,4.5,228,Los Angeles,CA,J7XaREYBkIiRlK2rnHNDXQ,34.04603290456726,-118.2355267, Pizza
 Todos Santos LA,4.5,9,Los Angeles,CA,ZfQmSPXjoZn6ug6nyeQqDw,34.09777,-118.31936," Cocktail Bars, Mexican, Salad"
 JINYA Ramen Bar,3.5,264,Los Angeles,CA,xNB1cPWE511X4_o8czmmUg,34.10234,-118.339982, Ramen
 Lory's Restaurant,4.5,54,Los Angeles,CA,RaKnMxcrsFtx6ii7yO353Q,34.0983351,-118.2977342," Middle Eastern, Mediterranean, Vegetarian"

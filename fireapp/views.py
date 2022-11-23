@@ -36,7 +36,7 @@ population = './dataSet/population.csv'
 restaurant = './dataSet/searchRest.csv'
 
 
-def make_json(csvFilePath, data, k):  # convert csv to json object
+def make_json(csvFilePath, data, k, jsonFilePath):  # convert csv to json object
 
     # Open a csv reader called DictReader
     with open(csvFilePath, encoding='utf-8') as csvf:
@@ -50,6 +50,9 @@ def make_json(csvFilePath, data, k):  # convert csv to json object
             # be the primary key
             key = rows[k]
             data[key] = rows
+
+    with open(jsonFilePath, 'w', encoding='utf-8') as jsonf:
+        jsonf.write(json.dumps(data, indent=4))
 
 
 def index(request):  # run when brower refreshed
@@ -66,22 +69,23 @@ def index(request):  # run when brower refreshed
     database.set(userdata)
 
     # upload review data
-    make_json(review, review_data, 'uid')
+    make_json(review, review_data, 'uid', './dataSet/export_review.json')
     if (database.child("review").get().val() == None):
         database.child("review").set(review_data)
 
     # upload user data
-    make_json(user, user_data, 'uid')
+    make_json(user, user_data, 'uid', './dataSet/export_user.json')
     if (database.child("user").get().val() == None):
         database.child("user").set(user_data)
 
     # upload population data
-    make_json(population, population_data, 'Rank')
+    make_json(population, population_data, 'Rank', './dataSet/population.json')
     if (database.child("population").get().val() == None):
         database.child("population").set(population_data)
 
     # upload restaurant data
-    make_json(restaurant, restaurant_data, 'business id')
+    make_json(restaurant, restaurant_data,
+              'business id', './dataSet/serchRest.json')
     if (database.child("restaurant").get().val() == None):
         database.child("restaurant").set(restaurant_data)
 

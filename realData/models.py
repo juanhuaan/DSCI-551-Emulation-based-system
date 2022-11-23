@@ -1,38 +1,98 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 
+
 # Create your models here.
 class City(models.Model):
-    name = models.CharField(max_length = 100, primary_key=True)
+    name = models.CharField(max_length=255,primary_key=True)
     rank = models.IntegerField(default = -1)
     population = models.IntegerField()
     class Meta:
-        db_table='City'
-    
+        abstract = True
+        
+class City0(City):
+    pass
+    class Meta:
+        db_table='City0'
+        
+class City1(City):
+    pass
+    class Meta:
+        db_table='City1'
+        
+class City2(City):
+    pass
+    class Meta:
+        db_table='City2'
+   
 class Restaurants(models.Model):
-    busniss_id = models.CharField(max_length = 10, primary_key=True)
-    name = models.CharField(max_length=20,default="")
+    business_id = models.CharField(max_length = 255, primary_key=True)
+    name = models.TextField(blank=True)
     rate = models.IntegerField()
     review_cnt = models.IntegerField()
-    city = models.CharField(max_length = 10)
+    city = models.TextField(blank=True)
     latitude = models.FloatField()
-    longitude = models.CharField(max_length=10)
-    categories = models.JSONField()
+    longitude =  models.FloatField()
+    categories = models.TextField(blank=True)
     class Meta:
-        db_table='Restaurants'
+        abstract = True
+
+class Rest0(Restaurants):
+    pass
+    class Meta:
+        db_table='Rest0'
+        
+class Rest1(Restaurants):
+    pass
+    class Meta:
+        db_table='Rest1'
+        
+class Rest2(Restaurants):
+    pass
+    class Meta:
+        db_table='Rest2'
+
+
 
 class RestUser(models.Model):
-    id = models.CharField(max_length = 30, primary_key=True)
-    name = models.CharField(max_length=30)
+    id = models.CharField(max_length = 255, primary_key=True)
+    name = models.TextField(blank=True)
     class Meta:
-        db_table='RestUser'
+        abstract = True
+        
+
+class User0(RestUser):
+    pass
+    class Meta:
+        db_table='User0'
+
+class User1(RestUser):
+    pass
+    class Meta:
+        db_table='User1'
+
+class User2(RestUser):
+    pass
+    class Meta:
+        db_table='User2'
+        
 
 class Rate(models.Model):
-    userId = models.ForeignKey(RestUser,on_delete=models.CASCADE,related_name='_id')
-    restId = models.ForeignKey(Restaurants,on_delete=models.CASCADE, related_name='bussiness_id')
+    userId = models.CharField(max_length = 255)
+    restId = models.CharField(max_length = 255)
     score = models.IntegerField()
     class Meta:
-        db_table='Rate'
+        abstract = True
+        
 
-  
-# name,rating score,review count,city,state,business id,latitude,longitude,categories
+class Rate0(Rate):
+    class Meta:
+        db_table='Rate0'
+
+class Rate1(Rate):
+    class Meta:
+        db_table='Rate1'
+
+class Rate2(Rate):
+    class Meta:
+        db_table='Rate2'

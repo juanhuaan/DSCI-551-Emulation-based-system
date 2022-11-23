@@ -1,8 +1,213 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from .models import Relations,Part,Paths
+from django.contrib import admin
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+from .serializer import PathSpecsSerializer, RelationSpecsSerializer
+import pandas as pd
+from http import HTTPStatus
+import json
+import uuid
 
 # Create your views here.
 
-def index(request):
-    return HttpResponse('Hello world')
+class CommandView(APIView):
+    """
+    Method: POST
+    Fuction: mkdir, put
+    URL: localhost:8000/api/commands/
+     {
+        "absolute_path": "/user",
+        "type":"DIRECTORY",
+        "command":"mkdir_or_put"
+     }
+    """
+    def post(self, request):
+        route = request.data['command']
+        if (route == "mkdir_or_put"):
+            path = request.data['absolute_path']
+            rootId = Paths.objects.get(name = '.').inode
+            curId = self.get_current_path_inode(path)
+            if (curId != "NotFound!"):
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+            type = request.data['type']
+            lst = path.split('/')
+            print(lst)
+            newDir = lst[-1]
+            upperPath = '/'.join(lst[i] for i in range(len(lst) - 1));
+            upperNode = self.get_current_path_inode(upperPath);
+            upperObj = Paths.objects.get(inode = upperNode)
+            newId = str(uuid.uuid4())
+            newPath = Paths.objects.create(inode = newId, pathType = type, name = newDir)
+            newPath.save()
+            newRelation = Relations.objects.create(parent = upperObj, child = newPath)
+            newRelation.save()
+            paths = Paths.objects.all()
+            serializer = PathSpecsSerializer(paths, many = True)
+            return Response(serializer.data)
     
+    """
+    USED BY ADMIN!!
+    Method: PUT
+    Fuction: initialization 
+    URL: localhost:8000/api/commands/
+    body: 
+        {
+            "absolute_path": '.'(Optional)
+        }
+    Returns: null
+    """
+    def put(self, request):
+        rootId = str(uuid.uuid4())
+        rootName = '.'
+        if Paths.objects.filter(name =".").exists():
+            return Response(HTTPStatus.ALREADY_REPORTED)
+        newPath = Paths.objects.create(inode = rootId, pathType = "DIRECTORY", name = rootName)
+        newPath.save()
+        paths = Paths.objects.all()
+        serializer = PathSpecsSerializer(paths, many = True)
+        return Response(serializer.data)
+    
+    """
+    Method: GET
+    Func: ls
+    URL: localhost:8000/api/commands/?command=ls
+    body: 
+        {
+            "absolute_path": ' /user', 
+            "command": 'ls'
+        }
+    
+    Func: checkAllPath
+    URL: localhost:8000/api/commands/
+    body: 
+        {
+            "absolute_path": "/user/Amy", 
+            "command": "checkAllPath"
+        }
+    
+    Func: go back to upper directory
+    URL: localhost:8000/api/commands/
+    body: 
+        {
+            "absolute_path": "/user/Amy", 
+            "command": "upper"
+        }
+    """
+    def get(self, request):
+        route = request.data['command']
+        if (route == 'checkAllPath'):
+            paths = Paths.objects.all()
+            serializer = PathSpecsSerializer(paths, many = True)
+            return Response(serializer.data)
+        
+        elif(route == 'ls'):
+            path = request.data['absolute_path']
+            curId = self.get_current_path_inode(path)
+            curObj = Paths.objects.get(inode = curId)
+            allChild = Relations.objects.filter(parent=curObj)
+            res = []
+            for obj in allChild:
+                childInode = obj.child.inode
+                res.append(Paths.objects.get(inode = childInode))
+            serializer = PathSpecsSerializer(res, many = True)
+            return Response(serializer.data)
+         
+        elif(route == 'relations'):
+            relations = Relations.objects.all()
+            serializer = RelationSpecsSerializer(relations, many = True)
+            return Response(serializer.data)
+        
+        elif (route == 'goback'):
+            path = request.data['absolute_path']
+            lst = path.split('/')
+            upperPath = '/'.join(lst[i] for i in range(len(lst) - 1));
+            upperNode = self.get_current_path_inode(upperPath);
+            upperObj = Paths.objects.get(inode = upperNode)
+            allChild = Relations.objects.filter(parent=upperObj)
+            res = []
+            for obj in allChild:
+                childInode = obj.child.inode
+                res.append(Paths.objects.get(inode = childInode))
+            serializer = PathSpecsSerializer(res, many = True)
+            return Response(serializer.data)
+            
+     
+    """
+    Method: DELETE
+    Fuction: delete a singal path and relation with this path, if it is a file delete its partitions
+    URL: localhost:8000/api/commands/
+    body: 
+        {
+            "absolute_path": "/marry", 
+            "command": "deleteOnePath"
+        }
+        
+    Fuction: delete all path and relation with this path, ADMIN USED!
+    URL: localhost:8000/api/commands/
+    body: 
+        {
+            "absolute_path": "/", 
+            "command": "deleteAllPath"
+        }
+    
+    """
+    def delete(self, request):
+        route = request.data['command']
+        if (route == 'deleteAllPath'):
+            Paths.objects.all().delete()
+            Relations.objects.all().delete()
+            Part.objects.all().delete()
+            return Response(status= HTTPStatus.NO_CONTENT)
+        
+        elif(route == 'deleteOnePath'):
+            cur_inode = self.get_current_path_inode(request.data['absolute_path'])
+            curObj = Paths.objects.get(inode = cur_inode)
+            res = []
+            res.append(curObj.inode)
+            self.get_all_child_path(curObj, res)
+            print(res)
+            for obj in res:
+                Paths.objects.get(inode = obj).delete();
+            return Response(status= HTTPStatus.NO_CONTENT)
+            
+    
+    def get_current_path_inode(self, path):
+        path = path.strip()
+        if path == "/":
+            return Paths.objects.get(name = ".").inode
+        nameList = path.split('/')
+        nameList[0] = '.'
+        lens = len(nameList)
+        rootId = Paths.objects.get(name = ".").inode;
+        preId = Paths.objects.get(name = ".").inode;
+        check = True;
+        for i in range(lens - 1):
+            root = Paths.objects.get(inode = rootId)
+            arr = Relations.objects.filter(parent = root)
+            childName = nameList[i + 1];
+            for obj in arr:
+                childInode = obj.child.inode
+                if (Paths.objects.get(inode = childInode).name == childName):
+                    rootId = childInode;
+                else:
+                    continue;
+            if rootId == preId:
+                return "NotFound!"
+            else:
+                preId = rootId
+            
+        return rootId;
+
+
+    def get_all_child_path(self,curObj,res):
+        temp= Relations.objects.filter(parent = curObj)
+        if len(temp) == 0:
+            return;
+        else:
+            for sin in temp:
+                res.append(sin.child.inode)
+                nextObj = Paths.objects.get(inode = sin.child.inode)
+                self.get_all_child_path(nextObj, res)
+            
