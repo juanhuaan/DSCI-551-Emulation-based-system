@@ -1,0 +1,33 @@
+.box {
+  background: url('./images/folder.png');
+  display: inline-flex;
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+}
+
+.boxbox {
+  margin: auto;
+}
+
+.iform {
+  margin: 10px;
+}
+
+.gobackbutton {
+  background: url('./images/arrowleft.png') no-repeat top left;
+  margin-top: 10px;
+  border: none;
+  height: 60px;
+  width: 60px;
+  /* transform: translateY(-50%); */
+}
+
+.navbar {
+  margin-left: 0;
+}
+
+.directory {
+  margin-top: 3%;
+  display: inline-flex;
+}
