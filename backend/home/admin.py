@@ -10,4 +10,4 @@ class HomeAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Paths, HomeAdmin);
 admin.site.register(models.Relations, HomeAdmin);
-admin.site.register(models.Patitions, HomeAdmin);
+admin.site.register(models.Part, HomeAdmin);

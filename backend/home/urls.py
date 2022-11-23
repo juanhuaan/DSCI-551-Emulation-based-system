@@ -1,7 +1,11 @@
 from django.urls import path
-
-from . import views
+from django.conf.urls import include
+from .views import CommandView
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('commands/', CommandView.as_view()),
+   
 ]
+
+
+

@@ -1,5 +1,4 @@
 .box {
-  background: url('./images/folder.png');
   display: inline-flex;
   width: 100px;
   height: 100px;
@@ -8,6 +7,7 @@
 
 .boxbox {
   margin: auto;
+  display: inline-flexbox;
 }
 
 .iform {
@@ -30,4 +30,9 @@
 .directory {
   margin-top: 3%;
   display: inline-flex;
+}
+
+.name {
+  margin-top: 0;
+  text-align: center;
 }

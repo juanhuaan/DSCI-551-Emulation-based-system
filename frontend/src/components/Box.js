@@ -1,4 +1,5 @@
 import React from "react"
+import File from "../images/file.png"
 
 export default function Box(props) {
     // const styles = {
@@ -6,9 +7,10 @@ export default function Box(props) {
     // }
 
     return (
-        <div>
-            <div className="box">
-                <div onClick={props.next}>
+        <div className="boxbox">
+            <div className="box" onClick={props.next}>
+                <div>
+                    <img src={File} />
                     <p className="name">{props.name}</p>
                 </div>
             </div>

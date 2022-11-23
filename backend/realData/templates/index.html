@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<head>
+    <title>Insert New Record</title>
+</head>
+<body>
+    <h1> Insert new Record to MYSQL </h1>
+    <hr/>
+    <form method "POST">
+        {% csrf_token %}
+    name: <input type="text" placeholder = "Enter Restaurant name" required/><br/>
+    rate: <input type="text" placeholder = "Enter rate" required/><br/>
+    review_cnt: <input type="text" placeholder = "Enter review_cnt" required/><br/>
+    city: <input type="text" placeholder = "Enter city" required/><br/>
+    latitude: <input type="text" placeholder = "Enter latitude" required/><br/>
+    longtitude: <input type="text" placeholder = "Enter longtitude" required/><br/>
+    categories:<input type="text" placeholder = "Enter categories" required/><br/>
+    <input type="submit" value = "Insert record"/h1>
+    {% if messages %}
+    {% for message in messages%}
+     <h2 style ="color:green;"> {{message}} </h2>
+    {% end for%}
+    {% end if%}
+    </form>
+    <hr/>
+</body>
+</html>
