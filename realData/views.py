@@ -69,8 +69,13 @@ class AllView(APIView):
         new.save()
     
     def createCity(self, table, data):
+        if type(data['Rank']) is str:
+            rank = int(data['Rank'].replace(",", "")),  
+            newRank = rank[0]
+        else:
+            newRank =  data['Rank']
         new = table.objects.create(name = data['City'],
-                                   rank = data['Rank'],
+                                   rank = newRank,
                                    population = int(data['Population'].replace(",", "")))
         new.save()
     
@@ -165,8 +170,18 @@ class CityView(AllView):
         obj1 = pd.read_csv(path);
         jsonObj = obj1.to_json(orient = 'records');
         objs = json.loads(jsonObj);
-        for data in objs:    
-            key = data['Rank'] % self.k
+        print(objs)
+        key = 0
+        for data in objs: 
+            if type(data['Rank']) is str:
+                rank = int(data['Rank'].replace(",", ""))%2, 
+                key = rank[0]  
+            else:
+                key =  data['Rank']%2
+               
+            # rank = data['Rank'] if type(data['Rank']) is int else int(data['Rank'].replace(",", "")),   
+            # key = rank % (self.k)
+            # key = data['Rank'] % self.k
             table = self.dict[key]
             # print(key)
             if(self.is_valid_primary_id(data['City'], table) == False):
@@ -175,6 +190,7 @@ class CityView(AllView):
         cities = self.get_queries(City0)
         serializer = CitySpecsSerializer(cities, many = True)
         return Response(serializer.data)
+        return Response(HTTPStatus.BAD_REQUEST)
     
     """
     Method: GET

@@ -99,7 +99,7 @@ Rank,City,Population
 98,Hawthorne,"86,091"
 99,Manteca,"85,792"
 100,Lake Forest,"85,742"
-101,Whittier,"85,311"
+101,Whitr,"85,311"
 102,Newport Beach,"84,792"
 103,Buena Park,"83,011"
 104,Redwood City,"81,643"
@@ -159,7 +159,7 @@ Rank,City,Population
 158,Monterey Park,"59,667"
 159,Petaluma,"59,403"
 160,Cupertino,"58,622"
-161,South Whittier,"58,616"
+161,South Whitr,"58,616"
 162,Hanford,"58,496"
 163,Gilroy,"58,101"
 164,Highland,"57,159"
@@ -289,7 +289,7 @@ Rank,City,Population
 288,Brawley,"26,539"
 289,Eureka,"26,489"
 290,South Pasadena,"26,314"
-291,West Whittier-Los Nietos,"26,121"
+291,West Whitr-Los Nietos,"26,121"
 292,Hercules,"26,091"
 293,Norco,"26,077"
 294,Imperial Beach,"26,059"
@@ -393,7 +393,7 @@ Rank,City,Population
 392,Susanville,"16,315"
 393,Parkway,"16,282"
 394,Stanford,"16,200"
-395 TIE,Kerman and Los Osos,"16,174"
+395 ,Kerman and Los Osos,"16,174"
 396,Rio Linda,"16,115"
 397,Cherryland,"15,976"
 398,Artesia,"15,944"
@@ -492,13 +492,13 @@ Rank,City,Population
 491,East Bakersfield,"10,254"
 492,Golden Hills,"10,234"
 493,Rio Vista,"10,217"
-494,East Whittier,"10,182"
-495 TIE,Corte Madera and Mentone,"10,141"
+494,East Whitr,"10,182"
+495 ,Corte Madera and Mentone,"10,141"
 496,Citrus,"10,105"
 497,Garden Acres,"10,096"
 498,Marina del Rey,"10,065"
 499,Rodeo,"10,023"
-500 TIE,La Cresta and Madera Acres,"9,990"
+500 ,La Cresta and Madera Acres,"9,990"
 501,Charter Oak,"9,963"
 502,Capitola,"9,846"
 503,San Diego Country Estates,"9,752"
@@ -514,7 +514,7 @@ Rank,City,Population
 513,Tiburon,"9,052"
 514,University of California-Davis,"9,031"
 515,Cloverdale,"8,954"
-516 TIE,Earlimart and Orosi,"8,908"
+516 ,Earlimart and Orosi,"8,908"
 517,Midway City,"8,681"
 518,Taft,"8,651"
 519,Gonzales,"8,576"
@@ -664,7 +664,7 @@ Rank,City,Population
 663,Tara Hills,"4,915"
 664,Ford City,"4,909"
 665,Needles,"4,903"
-666 TIE,Coarsegold and Emerald Lake Hills,"4,893"
+666 ,Coarsegold and Emerald Lake Hills,"4,893"
 667,Mayfair,"4,878"
 668,Indian Wells,"4,846"
 669,Phoenix Lake,"4,820"
@@ -712,7 +712,7 @@ Rank,City,Population
 711,Del Monte Forest,"3,783"
 712,Mojave,"3,780"
 713,Greenfield,"3,777"
-714 TIE,Bystrom and Burney,"3,763"
+714 ,Bystrom and Burney,"3,763"
 715,Angels,"3,758"
 716,San Andreas,"3,729"
 717,West Menlo Park,"3,720"
@@ -723,8 +723,8 @@ Rank,City,Population
 722,San Joaquin,"3,689"
 723,Hidden Meadows,"3,675"
 724,Kelseyville,"3,657"
-725 TIE,Mono Vista and Vandenberg AFB,"3,646"
-726 TIE,French Camp and Strathmore,"3,641"
+725 ,Mono Vista and Vandenberg AFB,"3,646"
+726 ,French Camp and Strathmore,"3,641"
 727,Lake Isabella,"3,621"
 728,Rollingwood,"3,612"
 729,Madera Ranchos,"3,591"
@@ -735,7 +735,7 @@ Rank,City,Population
 734,Pine Hills,"3,547"
 735,Campo,"3,536"
 736,Squaw Valley,"3,511"
-737 TIE,Pajaro and Mission Hills,"3,509"
+737 ,Pajaro and Mission Hills,"3,509"
 738,Meadow Vista,"3,508"
 739,Auburn Lake Trails,"3,495"
 740,Agua Dulce,"3,494"
@@ -757,7 +757,7 @@ Rank,City,Population
 756,Rio Dell,"3,367"
 757,Yountville,"3,360"
 758,Hoopa,"3,348"
-759 TIE,Reliez Valley and Auberry,"3,321"
+759 ,Reliez Valley and Auberry,"3,321"
 760,Bella Vista,"3,320"
 761,Cutten,"3,315"
 762,Weaverville,"3,308"
@@ -776,7 +776,7 @@ Rank,City,Population
 775,Carmel-by-the-Sea,"3,196"
 776,Casa Conejo,"3,184"
 777,Morongo Valley,"3,166"
-778 TIE,Cottonwood and Frazier Park,"3,121"
+778 ,Cottonwood and Frazier Park,"3,121"
 779,Nevada City,"3,114"
 780,San Antonio Heights,"3,113"
 781,North Lakeport,"3,067"
@@ -807,12 +807,12 @@ Rank,City,Population
 806,Sutter,"2,789"
 807,Bayview CDP,"2,787"
 808,Pepperdine University,"2,764"
-809 TIE,Dixon Lane-MeadowCreek and Romoland,"2,755"
+809 ,Dixon Lane-MeadowCreek and Romoland,"2,755"
 810,Bayview,"2,754"
 811,Riverdale,"2,727"
 812,Parksdale,"2,725"
-813 TIE,Crest and Santa Rosa Valley,"2,721"
-814 TIE,Channel Islands Beach and Three Rivers,"2,699"
+813 ,Crest and Santa Rosa Valley,"2,721"
+814 ,Channel Islands Beach and Three Rivers,"2,699"
 815,Alturas,"2,692"
 816,Sutter Creek,"2,691"
 817,Edwards AFB,"2,676"
@@ -822,7 +822,7 @@ Rank,City,Population
 821,Lexington Hills,"2,656"
 822,Hartley,"2,655"
 823,Mission Canyon,"2,649"
-824 TIE,Homestead Valley and Rose Hills,"2,619"
+824 ,Homestead Valley and Rose Hills,"2,619"
 825,Aromas,"2,609"
 826,South Oroville,"2,606"
 827,Hayfork,"2,586"
@@ -914,7 +914,7 @@ Rank,City,Population
 913,Black Point-Green Point,"1,738"
 914,Dunsmuir,"1,710"
 915,Quincy,"1,706"
-916 TIE,Rolling Hills city and Hidden Hills,"1,702"
+916 ,Rolling Hills city and Hidden Hills,"1,702"
 917,Lake Sherwood,"1,697"
 918,Rouse,"1,684"
 919,Los Ranchos,"1,675"
@@ -991,12 +991,12 @@ Rank,City,Population
 990,Upper Lake,"1,250"
 991,Del Rey,"1,246"
 992,Kettleman City,"1,245"
-993 TIE,Willow Creek and Del Rio,"1,241"
+993 ,Willow Creek and Del Rio,"1,241"
 994,March ARB,"1,236"
 995,Tahoe Vista,"1,233"
 996,La Honda,"1,229"
-997,Pasatiempo,"1,226"
-998 TIE,Montague and Pioneer,"1,224"
+997,Pasampo,"1,226"
+998 ,Montague and Pioneer,"1,224"
 999,Bolinas,"1,223"
 "1,000",Glen Ellen,"1,214"
 "1,001",Yosemite Valley,"1,213"
@@ -1004,7 +1004,7 @@ Rank,City,Population
 "1,003",Somis,"1,189"
 "1,004",Camanche North Shore,"1,188"
 "1,005",Fruitdale,"1,184"
-"1,006 TIE",Challenge-Brownsville and Silverado Resort,"1,171"
+"1,006 ",Challenge-Brownsville and Silverado Resort,"1,171"
 "1,007",Malaga,"1,168"
 "1,008",South Dos Palos,"1,167"
 "1,009",Whitewater,"1,166"
@@ -1023,7 +1023,7 @@ Rank,City,Population
 "1,022",Sheridan,"1,120"
 "1,023",Knightsen,"1,100"
 "1,024",Green Valley,"1,096"
-"1,025 TIE",Plymouth and Pala,"1,094"
+"1,025 ",Plymouth and Pala,"1,094"
 "1,026",El Macero,"1,086"
 "1,027",Gerber,"1,084"
 "1,028",Yermo,"1,082"
@@ -1034,11 +1034,11 @@ Rank,City,Population
 "1,033",Taft Mosswood,"1,060"
 "1,034",Spring Valley,"1,056"
 "1,035",Shandon,"1,054"
-"1,036 TIE",Hydesville and Alhambra Valley,"1,051"
+"1,036 ",Hydesville and Alhambra Valley,"1,051"
 "1,037",Herald,"1,049"
 "1,038",Tahoma,"1,039"
 "1,039",Matheny,"1,036"
-"1,040 TIE",Santa Margarita and West Park,"1,025"
+"1,040 ",Santa Margarita and West Park,"1,025"
 "1,041",Monte Rio,"1,023"
 "1,042",Maricopa,"1,021"
 "1,043",Petaluma Center,"1,020"
@@ -1062,11 +1062,11 @@ Rank,City,Population
 "1,061",Dollar Point,909
 "1,062",Butte Valley,907
 "1,063",North Edwards,906
-"1,064 TIE",Thornton and Teviston,903
+"1,064 ",Thornton and Teviston,903
 "1,065",Waterloo,902
 "1,066",Tulelake,901
 "1,067",Bradbury,900
-"1,068 TIE",Hopland and McCloud,899
+"1,068 ",Hopland and McCloud,899
 "1,069",Diablo Grande,892
 "1,070",Cedar Flat,886
 "1,071",Lompico,881
@@ -1085,13 +1085,13 @@ Rank,City,Population
 "1,084",Los Olivos,838
 "1,085",Linnell Camp,837
 "1,086",Sunol,835
-"1,087 TIE",Modjeska and Diablo,834
+"1,087 ",Modjeska and Diablo,834
 "1,088",Alto,818
 "1,089",Johnson Park,815
 "1,090",Indio Hills,811
 "1,091",Tranquillity,807
 "1,092",Cobb,805
-"1,093 TIE",Isleton and Blacklake,797
+"1,093 ",Isleton and Blacklake,797
 "1,094",Fieldbrook,793
 "1,095",Kernville,791
 "1,096",Norris Canyon,790
@@ -1106,12 +1106,12 @@ Rank,City,Population
 "1,105",Independence,761
 "1,106",Lake of the Woods,757
 "1,107",Junction City,754
-"1,108 TIE",Mesa Verde and Loyalton,753
+"1,108 ",Mesa Verde and Loyalton,753
 "1,109",Hickman,751
-"1,110 TIE",Doyle and Summerland,745
+"1,110 ",Doyle and Summerland,745
 "1,111",Niland,743
 "1,112",Catheys Valley,741
-"1,113 TIE",North Gate and Silverado,740
+"1,113 ",North Gate and Silverado,740
 "1,114",Clyde,737
 "1,115",Middletown,725
 "1,116",Wallace,721
@@ -1120,7 +1120,7 @@ Rank,City,Population
 "1,119",Ducor,708
 "1,120",Mendocino,707
 "1,121",Rolling Hills,706
-"1,122 TIE",Alta and Mountain Gate,703
+"1,122 ",Alta and Mountain Gate,703
 "1,123",Traver,702
 "1,124",Woodville Farm Labor Camp,701
 "1,125",Fort Jones,697
@@ -1134,7 +1134,7 @@ Rank,City,Population
 "1,133",West Goshen,674
 "1,134",Geyserville,671
 "1,135",Smith River,670
-"1,136 TIE",Lake Hughes and Indianola,660
+"1,136 ",Lake Hughes and Indianola,660
 "1,137",Lytle Creek,656
 "1,138",Inyokern,645
 "1,139",Valley Acres,641
@@ -1162,12 +1162,12 @@ Rank,City,Population
 "1,161",Springville,567
 "1,162",Carnelian Bay,565
 "1,163",Graeagle,552
-"1,164 TIE",San Simeon and New Cuyama,550
+"1,164 ",San Simeon and New Cuyama,550
 "1,165",Friant,541
 "1,166",Kenwood,540
 "1,167",McArthur,521
 "1,168",Rough and Ready,511
-"1,169 TIE",Davenport and Bridgeport,509
+"1,169 ",Davenport and Bridgeport,509
 "1,170",Ballico,508
 "1,171",Madison,502
 "1,172",Miranda,498
@@ -1175,22 +1175,22 @@ Rank,City,Population
 "1,174",Wilkerson,495
 "1,175",Round Valley,493
 "1,176",Scotia,490
-"1,177 TIE",Yettem and Smartsville,487
+"1,177 ",Yettem and Smartsville,487
 "1,178",Mokelumne Hill,484
 "1,179",Newell,481
 "1,180",Meadow Valley,478
 "1,181",Courtland,473
-"1,182 TIE","Concow, Peters, and Cowan",472
+"1,182 ","Concow, Peters, and Cowan",472
 "1,183",Point Arena,470
 "1,184",Paradise Park,468
-"1,185 TIE",Elfin Forest and Grimes,462
+"1,185 ",Elfin Forest and Grimes,462
 "1,186",Ripley,460
 "1,187",Boulevard,453
-"1,188 TIE",Clipper Mills and Lockwood CDP,451
+"1,188 ",Clipper Mills and Lockwood CDP,451
 "1,189",Seville,449
 "1,190",Hamilton Branch,446
 "1,191",Avery,444
-"1,192 TIE",Sierra Brooks and French Gulch,441
+"1,192 ",Sierra Brooks and French Gulch,441
 "1,193",Shaver Lake,438
 "1,194",Mesa,434
 "1,195",Salyer,433
@@ -1199,20 +1199,20 @@ Rank,City,Population
 "1,198",Robbins,428
 "1,199",Bend,425
 "1,200",Tehama,424
-"1,201 TIE",River Pines and Victor,420
-"1,202 TIE",Pescadero and Garden Farms,418
+"1,201 ",River Pines and Victor,420
+"1,202 ",Pescadero and Garden Farms,418
 "1,203",Whitmore,416
 "1,204",San Lucas,415
 "1,205",Rio Oso,414
-"1,206 TIE","June Lake, Smith Corner, and Fulton",413
+"1,206 ","June Lake, Smith Corner, and Fulton",413
 "1,207",Desert Shores,411
 "1,208",Edna,408
-"1,209 TIE",Dorrington and Bangor,407
+"1,209 ",Dorrington and Bangor,407
 "1,210",Walker,401
 "1,211",Terminous,400
 "1,212",Di Giorgio,398
-"1,213 TIE",Coloma and Swall Meadows,390
-"1,214 TIE",Nipinnawasee and Beckwourth,388
+"1,213 ",Coloma and Swall Meadows,390
+"1,214 ",Nipinnawasee and Beckwourth,388
 "1,215",Fall River Mills,387
 "1,216",Lake Almanor Peninsula,382
 "1,217",Oak Run,379
@@ -1220,7 +1220,7 @@ Rank,City,Population
 "1,219",Cantua Creek,376
 "1,220",Potter Valley,374
 "1,221",Spreckels,373
-"1,222 TIE",Topaz and Forbestown,369
+"1,222 ",Topaz and Forbestown,369
 "1,223",Nord,368
 "1,224",California Pines,367
 "1,225",Clarksburg,366
@@ -1228,10 +1228,10 @@ Rank,City,Population
 "1,227",Plumas Eureka,358
 "1,228",Coleville,353
 "1,229",Lockwood,351
-"1,230 TIE",Crows Landing and Orick,346
-"1,231 TIE","Richfield, Edmundson Acres, and Mad River",341
-"1,232 TIE",Cazadero and Chilcoot-Vinton,340
-"1,233 TIE",Mexican Colony and Princeton,337
+"1,230 ",Crows Landing and Orick,346
+"1,231 ","Richfield, Edmundson Acres, and Mad River",341
+"1,232 ",Cazadero and Chilcoot-Vinton,340
+"1,233 ",Mexican Colony and Princeton,337
 "1,234",Manton,331
 "1,235",Lake Almanor West,329
 "1,236",Sand City,328
@@ -1240,20 +1240,20 @@ Rank,City,Population
 "1,239",Oak Shores,325
 "1,240",Grangeville,324
 "1,241",Mountain Ranch,318
-"1,242 TIE",Midpines and Centerville,314
+"1,242 ",Midpines and Centerville,314
 "1,243",Cromberg,312
-"1,244 TIE",Dillon Beach and Trinidad,309
-"1,245 TIE",Caspar and Oak Glen,307
+"1,244 ",Dillon Beach and Trinidad,309
+"1,245 ",Caspar and Oak Glen,307
 "1,246",Twain,303
 "1,247",Del Dios,302
 "1,248",Los Berros,301
 "1,249",Stirling City,300
 "1,250",Salton Sea Beach,299
-"1,251 TIE",Canby and Grenada,295
-"1,252 TIE",Monterey Park Tract and Clear Creek,293
+"1,251 ",Canby and Grenada,295
+"1,252 ",Monterey Park Tract and Clear Creek,293
 "1,253",Bass Lake,291
 "1,254",Iron Horse,290
-"1,255 TIE","Cherokee Strip, Albion, and Hood",289
+"1,255 ","Cherokee Strip, Albion, and Hood",289
 "1,256",Derby Acres,288
 "1,257",Bowles,287
 "1,258",Desert Center,285
@@ -1262,7 +1262,7 @@ Rank,City,Population
 "1,261",Meridian,278
 "1,262",El Portal,271
 "1,263",Manchester,267
-"1,264 TIE",Hiouchi and Cassel,266
+"1,264 ",Hiouchi and Cassel,266
 "1,265",Trinity Center,265
 "1,266",Lemon Cove,263
 "1,267",Acampo,261
@@ -1271,152 +1271,152 @@ Rank,City,Population
 "1,270",Fairhaven,254
 "1,271",Choctaw Valley,252
 "1,272",Mountain Meadows,251
-"1,273 TIE",Potrero and Mineral,250
+"1,273 ",Potrero and Mineral,250
 "1,274",Groveland,249
 "1,275",Trinity Village,248
 "1,276",Industry,245
 "1,277",Benton,244
-"1,278 TIE","Hornbrook, Cressey, and Bloomfield",243
+"1,278 ","Hornbrook, Cressey, and Bloomfield",243
 "1,279",Port Costa,242
-"1,280 TIE",Homewood Canyon and Lanare,241
-"1,281 TIE",Tonyville and Artois,236
+"1,280 ",Homewood Canyon and Lanare,241
+"1,281 ",Tonyville and Artois,236
 "1,282",Pajaro Dunes,235
 "1,283",Elmira,234
 "1,284",Castella,230
 "1,285",Sierra Village,226
-"1,286 TIE",Vernon and Las Flores,217
-"1,287 TIE",Bombay Beach and Fort Washington,215
-"1,288 TIE",Westside and Ruth,213
-"1,289 TIE",Vina and Tecopa,212
-"1,290 TIE","Fiddletown, Samoa, and Mesa Vista",211
-"1,291 TIE",Monson and Point Reyes Station,210
-"1,292 TIE",Adin and Valley Home,209
+"1,286 ",Vernon and Las Flores,217
+"1,287 ",Bombay Beach and Fort Washington,215
+"1,288 ",Westside and Ruth,213
+"1,289 ",Vina and Tecopa,212
+"1,290 ","Fiddletown, Samoa, and Mesa Vista",211
+"1,291 ",Monson and Point Reyes Station,210
+"1,292 ",Adin and Valley Home,209
 "1,293",Dos Palos Y,206
 "1,294",College City,205
 "1,295",La Vina,203
 "1,296",Greenhorn,202
 "1,297",Amador City,201
-"1,298 TIE","Stevinson, Trowbridge, and Yolo",196
+"1,298 ","Stevinson, Trowbridge, and Yolo",196
 "1,299",Big Bend,195
-"1,300 TIE",Rackerby and Ridgecrest Heights,193
+"1,300 ",Rackerby and Ridgecrest Heights,193
 "1,301",Keswick,192
-"1,302 TIE",Coffee Creek and Markleeville,187
+"1,302 ",Coffee Creek and Markleeville,187
 "1,303",Burnt Ranch,185
-"1,304 TIE","Clio, Tooleville, and Lodoga",184
+"1,304 ","Clio, Tooleville, and Lodoga",184
 "1,305",Litchfield,183
 "1,306",Olancha,181
 "1,307",Camptonville,179
-"1,308 TIE",Little River and San Geronimo,176
+"1,308 ",Little River and San Geronimo,176
 "1,309",Elk Creek,175
 "1,310",Fort Bidwell,174
-"1,311 TIE",East Nicolaus and Honcut,172
-"1,312 TIE","Farmington, Pumpkin Center, and Sisquoc",169
+"1,311 ",East Nicolaus and Honcut,172
+"1,312 ","Farmington, Pumpkin Center, and Sisquoc",169
 "1,313",Paradise,168
-"1,314 TIE",Wawona and Sierraville,166
+"1,314 ",Wawona and Sierraville,166
 "1,315",Calpine,164
 "1,316",Flournoy,161
-"1,317 TIE",Tomales and Hypericum,160
+"1,317 ",Tomales and Hypericum,160
 "1,318",Big Creek,159
 "1,319",Richvale,157
-"1,320 TIE",Kirkwood and Philo,156
+"1,320 ",Kirkwood and Philo,156
 "1,321",Hardwick,155
 "1,322",Verdi,154
 "1,323",Pine Flat,153
-"1,324 TIE",Benbow and Dobbins,152
-"1,325 TIE",North San Juan and Winterhaven,151
+"1,324 ",Benbow and Dobbins,152
+"1,325 ",North San Juan and Winterhaven,151
 "1,326",Igo,148
 "1,327",Chinese Camp,146
-"1,328 TIE",Bieber and Daphnedale Park,145
-"1,329 TIE",Kennedy Meadows and La Grange,143
-"1,330 TIE","Bluewater, Alpine Village, and Comptche",142
-"1,331 TIE",Greenview and East Shore,139
+"1,328 ",Bieber and Daphnedale Park,145
+"1,329 ",Kennedy Meadows and La Grange,143
+"1,330 ","Bluewater, Alpine Village, and Comptche",142
+"1,331 ",Greenview and East Shore,139
 "1,332",Washington,137
-"1,333 TIE",Bear Valley CDP and Mono City,135
+"1,333 ",Bear Valley CDP and Mono City,135
 "1,334",Tupman,134
-"1,335 TIE",Dutch Flat and Volta,133
+"1,335 ",Dutch Flat and Volta,133
 "1,336",Vallecito,132
 "1,337",McKittrick,130
 "1,338",Spaulding,129
 "1,339",Myers Flat,126
-"1,340 TIE","Hyampom, Nicolaus, and Weott",124
+"1,340 ","Hyampom, Nicolaus, and Weott",124
 "1,341",Nicasio,123
 "1,342",Pike,120
-"1,343 TIE",Montgomery Creek and El Adobe,118
-"1,344 TIE",Twin Lakes and Milford,117
-"1,345 TIE",Snelling and Mettler,115
-"1,346 TIE","Guinda, Monmouth, and Martell",113
-"1,347 TIE",Alta Sierra and Gazelle,111
+"1,343 ",Montgomery Creek and El Adobe,118
+"1,344 ",Twin Lakes and Milford,117
+"1,345 ",Snelling and Mettler,115
+"1,346 ","Guinda, Monmouth, and Martell",113
+"1,347 ",Alta Sierra and Gazelle,111
 "1,348",Edison,109
 "1,349",Williams Canyon,108
-"1,350 TIE",Timber Cove and Rumsey,107
+"1,350 ",Timber Cove and Rumsey,107
 "1,351",Mt. Bullion,105
-"1,352 TIE","Phillipsville, Mount Laguna, Stones Landing, and Kingvale",102
-"1,353 TIE","Round Mountain, Rutherford, and Cherokee",100
-"1,354 TIE","Downieville, Alleghany, Bradley, and Randsburg",99
-"1,355 TIE","Rail Road Flat, Three Rocks, and Tuttle",97
+"1,352 ","Phillipsville, Mount Laguna, Stones Landing, and Kingvale",102
+"1,353 ","Round Mountain, Rutherford, and Cherokee",100
+"1,354 ","Downieville, Alleghany, Bradley, and Randsburg",99
+"1,355 ","Rail Road Flat, Three Rocks, and Tuttle",97
 "1,356",Bear Creek,95
 "1,357",Jovista,93
 "1,358",Big Lagoon,92
-"1,359 TIE","Bear Valley, Lake Davis, and Hat Creek",91
-"1,360 TIE",Darwin and C-Road,90
-"1,361 TIE","Casmalia, Long Barn, and Furnace Creek",88
+"1,359 ","Bear Valley, Lake Davis, and Hat Creek",91
+"1,360 ",Darwin and C-Road,90
+"1,361 ","Casmalia, Long Barn, and Furnace Creek",88
 "1,362",Lake City,86
-"1,363 TIE",Goodmanville and Sierra City,84
+"1,363 ",Goodmanville and Sierra City,84
 "1,364",Post Mountain,82
 "1,365",Goodyears Bar,80
 "1,366",Palo Verde,78
-"1,367 TIE",Old River and Stonyford,76
+"1,367 ",Old River and Stonyford,76
 "1,368",Gold Mountain,75
-"1,369 TIE",Hornitos and Oakville,74
-"1,370 TIE",Sattley and Lindcove,73
+"1,369 ",Hornitos and Oakville,74
+"1,370 ",Sattley and Lindcove,73
 "1,371",Mabie,72
-"1,372 TIE",Crescent Mills and Freeport,70
-"1,373 TIE",Trona and Moskowite Corner,69
-"1,374 TIE",Keddie and Sunny Slopes,68
+"1,372 ",Crescent Mills and Freeport,70
+"1,373 ",Trona and Moskowite Corner,69
+"1,374 ",Keddie and Sunny Slopes,68
 "1,375",Woody,67
 "1,376",Knights Ferry,62
-"1,377 TIE",Mount Hebron and Rodriguez Camp,61
-"1,378 TIE",Lee Vining and Paskenta,59
-"1,379 TIE",Weitchpec and Carrick,58
-"1,380 TIE",Sereno del Mar and Ono,57
-"1,381 TIE",Aspen Springs and Leggett,56
-"1,382 TIE",Fellows and Glennville,54
+"1,377 ",Mount Hebron and Rodriguez Camp,61
+"1,378 ",Lee Vining and Paskenta,59
+"1,379 ",Weitchpec and Carrick,58
+"1,380 ",Sereno del Mar and Ono,57
+"1,381 ",Aspen Springs and Leggett,56
+"1,382 ",Fellows and Glennville,54
 "1,383",Mohawk Vista,53
-"1,384 TIE",Ponderosa and Crane Creek,52
-"1,385 TIE","Panorama Heights, Rivergrove, and Waukena",51
-"1,386 TIE",Lookout and Fish Camp,50
+"1,384 ",Ponderosa and Crane Creek,52
+"1,385 ","Panorama Heights, Rivergrove, and Waukena",51
+"1,386 ",Lookout and Fish Camp,50
 "1,387",Cartago,49
-"1,388 TIE",Johannesburg and Robinson Mill,48
-"1,389 TIE","Garey, New Pine Creek, and Paynes Creek",47
+"1,388 ",Johannesburg and Robinson Mill,48
+"1,389 ","Garey, New Pine Creek, and Paynes Creek",47
 "1,390",Soda Springs,46
 "1,391",Volcano,45
-"1,392 TIE",Whitley Gardens and Ocotillo,44
+"1,392 ",Whitley Gardens and Ocotillo,44
 "1,393",Pierpoint,42
 "1,394",Brooks,41
 "1,395",California Hot Springs,40
-"1,396 TIE",Sequoia Crest and Edgewood,39
-"1,397 TIE",Valley Ranch and McClenney Tract,38
+"1,396 ",Sequoia Crest and Edgewood,39
+"1,397 ",Valley Ranch and McClenney Tract,38
 "1,398",Whitehawk,37
 "1,399",Proberta,36
 "1,400",Taylorsville,35
 "1,401",Yosemite West,33
-"1,402 TIE","Jenner, Moss Landing, Nubieber, and Creston",31
+"1,402 ","Jenner, Moss Landing, Nubieber, and Creston",31
 "1,403",Floriston,28
 "1,404",Prattville,27
-"1,405 TIE","Macdoel, Alderpoint, Franklin, and Kep'el",26
+"1,405 ","Macdoel, Alderpoint, Franklin, and Kep'el",26
 "1,406",Butte Meadows,25
-"1,407 TIE",Coulterville and Platina,23
-"1,408 TIE","Bucks Lake, Tennant, and Old Station",21
+"1,407 ",Coulterville and Platina,23
+"1,408 ","Bucks Lake, Tennant, and Old Station",21
 "1,409",Salmon Creek,20
-"1,410 TIE","Little Valley, Redcrest, Tancred, and Spring Garden",19
+"1,410 ","Little Valley, Redcrest, Tancred, and Spring Garden",19
 "1,411",Shoshone,18
 "1,412",Mountain Center,17
-"1,413 TIE",Wautec and Eagleville,15
+"1,413 ",Wautec and Eagleville,15
 "1,414",Graniteville,14
 "1,415",Drytown,13
-"1,416 TIE",Cuyama and Madeline,11
+"1,416 ",Cuyama and Madeline,11
 "1,417",Indian Falls,10
 "1,418",Sugarloaf Village,8
-"1,419 TIE",Charleston View and Keeler,6
+"1,419 ",Charleston View and Keeler,6
 "1,420",Strawberry,5
 "1,421",Poso Park,3
