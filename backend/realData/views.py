@@ -58,6 +58,12 @@ class AllView(APIView):
         database create functions
     """  
     def createRest(self, table, data):
+        if (data['latitude'] == None):
+            data['latitude'] = 0
+        if (data['longitude'] == None):
+            data['longitude'] = 0
+        if (data['categories'] == None):
+            data['categories'] = ""
         new = table.objects.create(business_id = data['business_id'],
                                     name = data['name'],
                                     rate = data['rate'],
@@ -69,8 +75,13 @@ class AllView(APIView):
         new.save()
     
     def createCity(self, table, data):
+        if type(data['Rank']) is str:
+            rank = int(data['Rank'].replace(",", "")),  
+            newRank = rank[0]
+        else:
+            newRank =  data['Rank']
         new = table.objects.create(name = data['City'],
-                                   rank = data['Rank'],
+                                   rank = newRank,
                                    population = int(data['Population'].replace(",", "")))
         new.save()
     
@@ -84,6 +95,8 @@ class AllView(APIView):
                                    restId = data['rid'],
                                    score = data['rating'])
         new.save()
+    
+    
 
 class RestView(AllView):
     
@@ -113,10 +126,10 @@ class RestView(AllView):
         obj1 = pd.read_csv(path);
         jsonObj = obj1.to_json(orient = 'records');
         objs = json.loads(jsonObj);
+        # print(objs)
         for rest_data in objs:    
             key = ord(rest_data['business_id'][0]) % self.k
             table = self.dict[key]
-            # print(key)
             if(self.is_valid_primary_id(rest_data['business_id'], table) == False):
                 continue;
             self.createRest(table, rest_data)
@@ -126,20 +139,29 @@ class RestView(AllView):
     
     """
     Method: GET
-    URL: localhost:8000/api/restaurants/?table=0
-    parameters: table = 0(this number is the specific partition could be 0,1,2)
+    URL: localhost:8000/api/restaurants/
+    body: 
+        {
+            "command": "checkTable",
+            "table": 0
+        }
     Returns: restaurants information in Partition Table
-        _type_: json array string
         fields =['business_id', 'name', 'rate', 'review_cnt', 'city', 
                 'latitude', 'longitude', 'categories']
     """
     def get(self, request, format=None):
-        table_num = self.request.query_params.get('table')
-        table = self.dict[int(table_num)]
-        restaurants = self.get_queries(table)
-        serializer = RestaurantSpecsSerializer(restaurants, many = True)
-        return Response(serializer.data)
-
+        command = request.data['command']
+        if command == 'checkTable':
+            table_num = request.data['table']
+            table = self.dict[int(table_num)]
+            restaurants = self.get_queries(table)
+            serializer = RestaurantSpecsSerializer(restaurants, many = True)
+            return Response(serializer.data)
+        if command == "cat":
+            obj1 = pd.read_csv('dataSet/rest.csv');
+            jsonObj = obj1.to_json(orient = 'records');
+            return Response(jsonObj)
+            
 class CityView(AllView):
     
     k = 3
@@ -165,8 +187,15 @@ class CityView(AllView):
         obj1 = pd.read_csv(path);
         jsonObj = obj1.to_json(orient = 'records');
         objs = json.loads(jsonObj);
-        for data in objs:    
-            key = data['Rank'] % self.k
+        # print(objs)
+        key = 0
+        for data in objs: 
+            if type(data['Rank']) is str:
+                rank = int(data['Rank'].replace(",", ""))%self.k, 
+                key = rank[0]  
+            else:
+                key =  data['Rank']%self.k
+               
             table = self.dict[key]
             # print(key)
             if(self.is_valid_primary_id(data['City'], table) == False):
@@ -177,20 +206,35 @@ class CityView(AllView):
         return Response(serializer.data)
     
     """
-    Method: GET
-    URL: localhost:8000/api/city/?table=0
-    parameters: table = 0
+    Method: GET partition table info
+    URL: localhost:8000/api/city/
+    {
+        "command": "checkTable",
+        "table": 2
+    }
     Returns: restaurants information in Partition Table
         _type_: json array string
         fields =['name', 'rank', 'population']
+        
+    Method: GET partition table info
+    {
+        "command": "cat"
+    }
+    Returns: CSV json string
     """
     def get(self, request, format=None):
-        table_num = self.request.query_params.get('table')
-        table = self.dict[int(table_num)]
-        cities = self.get_queries(table)
-        serializer = CitySpecsSerializer(cities, many = True)
-        return Response(serializer.data)
-
+        command = request.data['command']
+        if command == 'checkTable':
+            table_num = request.data['table']
+            table = self.dict[int(table_num)]
+            cities = self.get_queries(table)
+            serializer = CitySpecsSerializer(cities, many = True)
+            return Response(serializer.data)
+        if command == "cat":
+            obj1 = pd.read_csv('dataSet/city.csv');
+            jsonObj = obj1.to_json(orient = 'records');
+            return Response(jsonObj)
+        
 class UserView(AllView):
     
     k = 3
@@ -236,12 +280,18 @@ class UserView(AllView):
         fields =['name', 'rank', 'population']
     """
     def get(self, request, format=None):
-        table_num = self.request.query_params.get('table')
-        table = self.dict[int(table_num)]
-        users = self.get_queries(table)
-        serializer = UserSpecsSerializer(users, many = True)
-        return Response(serializer.data)
-
+        command = request.data['command']
+        if command == 'checkTable':
+            table_num = self.request.data['table']
+            table = self.dict[int(table_num)]
+            users = self.get_queries(table)
+            serializer = UserSpecsSerializer(users, many = True)
+            return Response(serializer.data)
+        if command == "cat":
+            obj1 = pd.read_csv('dataSet/city.csv');
+            jsonObj = obj1.to_json(orient = 'records');
+            return Response(jsonObj)
+        
 class RateView(AllView):
     
     k = 3
@@ -285,8 +335,21 @@ class RateView(AllView):
         fields =['name', 'rank', 'population']
     """
     def get(self, request, format=None):
-        table_num = self.request.query_params.get('table')
-        table = self.dict[int(table_num)]
-        rates = self.get_queries(table)
-        serializer = RateSpecsSerializer(rates, many = True)
-        return Response(serializer.data)
+        command = request.data['command']
+        if command == 'checkTable':
+            table_num = self.request.data['table']
+            table = self.dict[int(table_num)]
+            rates = self.get_queries(table)
+            serializer = RateSpecsSerializer(rates, many = True)
+            return Response(serializer.data)
+        if command == "cat":
+            obj1 = pd.read_csv('dataSet/city.csv');
+            jsonObj = obj1.to_json(orient = 'records');
+            return Response(jsonObj)
+    
+    def delete(self, request):
+        Rate0.objects.all().delete()
+        Rate1.objects.all().delete()
+        Rate2.objects.all().delete()
+        return Response(status= HTTPStatus.NO_CONTENT) 
+        

@@ -1,10 +1,10 @@
 name,rate,review_cnt,city,state,business_id,latitude,longitude,categories
 GRANVILLE,4.5,2238,West Hollywood,CA,cal0Wpupxj9c_AV7WzDXsw,34.0771299,-118.38068," American (New), Cocktail Bars"
 Running Goose,4.5,1477,Los Angeles,CA,RVbZaawgEGmto6TxOoVBdQ,34.10052,-118.32927," Gastropubs, Latin American"
-King Chang - LA,5.0,217,Los Angeles,CA,iRjnWYY5oVJTaZ5teU1vOQ,34.06329,-118.30372," Korean, Barbeque"
+King Chang - LA,5.0,217,Los Angeles,CA,iRjnWYY5oVJTaZ5teU1vOQ,,," Korean, Barbeque"
 L'Antica Pizzeria Da Michele,4.5,1542,Los Angeles,CA,88kri8FhXy8b3DQ_QjSMmQ,34.09904755,-118.33732706," Pizza, Italian, Breakfast & Brunch"
 Met Him At A Bar,4.5,474,Los Angeles,CA,HuQtriV_ApipXfM8xax33w,34.060415,-118.345018," Italian, Cocktail Bars"
 Hangari Kalguksu,4.5,2218,Los Angeles,CA,h1R2iKYdm2lwukzMJvJqDw,34.0628602582049,-118.297570301258," Korean, Noodles"
 Republique,4.0,6483,Los Angeles,CA,z0zaCVA-p_5xTsyUZrmR0g,34.06412,-118.34386," French, Breakfast & Brunch, Cocktail Bars"
 Great White,4.0,214,Los Angeles,CA,1RJCu-0D5ZEnVRBKwqodGQ,34.07587723057971,-118.3233931," American (New), Breakfast & Brunch, Cocktail Bars"
-HanEuem,4.5,151,Los Angeles,CA,WO12S4gvOYkYF8_70RWrQA,34.06427634725579,-118.30950933119468," Korean, Gastropubs"
+HanEuem,4.5,151,Los Angeles,CA,WO12S4gvOYkYF8_70RWrQA,,," Korean, Gastropubs"
