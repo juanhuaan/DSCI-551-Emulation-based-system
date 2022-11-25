@@ -1,17 +1,16 @@
 .box {
-  display: inline-flex;
+  gap: 15px;
+  margin-left: 10px;
+  margin-top: 10px;
   width: 100px;
-  height: 100px;
-  margin: 10px;
-}
-
-.boxbox {
-  margin: auto;
-  display: inline-flexbox;
+  position: relative;
+  display: inline-flex;
+  flex-wrap: wrap;
 }
 
 .iform {
-  margin: 10px;
+  margin-left: 10px;
+  margin-top: 50px;
 }
 
 .gobackbutton {
@@ -20,7 +19,6 @@
   border: none;
   height: 60px;
   width: 60px;
-  /* transform: translateY(-50%); */
 }
 
 .navbar {
