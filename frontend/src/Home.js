@@ -5,6 +5,9 @@ import InputForm from "./components/InputForm";
 import Modal from "./components/Modal";
 import "./Home.css"
 import { Link } from "react-router-dom";
+import axios from 'axios'
+axios.defaults.baseURL = "http://127.0.0.1:8000/api"
+
 
 
 export default function Home() {
@@ -19,27 +22,65 @@ export default function Home() {
     const [loc, setLoc] = React.useState("root");
     const [openModal, setOpenModal] = useState(false)
 
+    let para = {
+        "absolute_path": "/user/s",
+        "type": "DIRECTORY",
+        "command": "mkdir_or_put"
+    };
+    // const invocation = new XMLHttpRequest();
+    // const url1 = "http://127.0.0.1:8000/api/commands/?absolute_path=/&command=checkAllPath"
+    // const handler = async (data) => {
+    //     try {
+    //         const res = await axios.get(`/commands/?absolute_path=/&command=checkAllPath`)
+    //         data = res.data
+    //         console.log(data)
+    //     } catch (err) {
+    //         console.error(err)
+    //     }
+    // }
+    // function callOther() {
+    //     if (invocation) {
+    //         invocation.open("GET", url, true);
+    //         invocation.withCredentials = true;
+    //         invocation.onreadystatechange = handler;
+    //         invocation.send();
+    //     }
+    // }
+    // callOther()
+
+
+
+
+    // fetchPaths();
+
+
+
+    fetch('http://127.0.0.1:8000/api/commands/?absolute_path=/&command=checkAllPath', {
+        method: 'GET',
+        headers: {
+            'Access-Control-Allow-Origin': 'cors'
+        },
+
+    })
+        .then(response => response.json())
+        .then(response => console.log(JSON.stringify(response)))
+
+
 
     React.useEffect(() => {
         const firebasedata = []
         console.log("effect run");
         //API call
-        fetch("https://edfs-b732d-default-rtdb.firebaseio.com/root.json")
-            .then(res => res.json())
-            .then(data => {
-                // console.log(data)
-                // console.log(JSON.stringify(data))
-                for (let child in data) {
-                    console.log(child)
-                    firebasedata.push({
-                        id: firebasedata.length,
-                        isfile: false,
-                        name: child
-                    })
-                }
-                setdatarry(firebasedata)
-                console.log(firebasedata)
-            })
+        let para = {
+            "absolute_path": "/user",
+            "command": "ls"
+        };
+
+        // fetch("http://127.0.0.1:8000/api/commands/", {
+        //     method: 'GET',
+        //     mode: 'cors',
+        //     body: JSON.stringify(para),
+        // }).then(res => res.json()).then(data => console.log(data))
     }, [])
 
     if (datarry === null) {
@@ -141,7 +182,9 @@ export default function Home() {
 
     //html display
     return (
+
         <div className="App">
+
             <Nav
                 currentdirectory={loc}
                 goback={() => handleGoback()}

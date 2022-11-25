@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Analyze from "./Analyze"
 import Home from "./Home"
+import Homecy from "./Homecy"
 import {
   BrowserRouter as Router,
   Routes,
