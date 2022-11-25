@@ -60,24 +60,17 @@ export default function Home() {
     // }
     // callOther()
 
-
-
-
     // fetchPaths();
 
+    // fetch('http://127.0.0.1:8000/api/commands/?absolute_path=/&command=checkAllPath', {
+    //     method: 'GET',
+    //     headers: {
+    //         'Access-Control-Allow-Origin': 'cors'
+    //     },
 
-
-    fetch('http://127.0.0.1:8000/api/commands/?absolute_path=/&command=checkAllPath', {
-        method: 'GET',
-        headers: {
-            'Access-Control-Allow-Origin': 'cors'
-        },
-
-    })
-        .then(response => response.json())
-        .then(response => console.log(JSON.stringify(response)))
-
-
+    // })
+    //     .then(response => response.json())
+    //     .then(response => console.log(JSON.stringify(response)))
 
     React.useEffect(() => {
         const firebasedata = []
