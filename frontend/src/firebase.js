@@ -1,47 +1,18 @@
-import { getDatabase, ref, set } from "firebase/database";
-import React from "react";
-
-const db = getDatabase();
-const [datarry, setdatarry] = React.useState([])
-const [url, seturl] = React.useState("https://edfs-b732d-default-rtdb.firebaseio.com")
+import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
 
 
-//get data ls
-function fget(path) {
-    fetch(url + ".json")
-        .then(res => res.json())
-        .then(data => {
-            for (let child in data) {
-                console.log(child)
-                firebasedata.push({
-                    id: firebasedata.length,
-                    isfile: false,
-                    name: child
-                })
-            }
-            setdatarry(firebasedata)
-            console.log(firebasedata)
+const firebaseConfig = {
+    apiKey: "AIzaSyDzbaYF7sqQUhS8fU8m4PZM3RlnK83H4L8",
+    authDomain: "edfs-b732d.firebaseapp.com",
+    databaseURL: "https://edfs-b732d-default-rtdb.firebaseio.com",
+    projectId: "edfs-b732d",
+    storageBucket: "edfs-b732d.appspot.com",
+    messagingSenderId: "277169660583",
+    appId: "1:277169660583:web:541cb7dba76f84d0afb182",
+    measurementId: "G-STBE45S793"
+};
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+export const db = getDatabase(app);
 
-        })
-
-}
-//filename and number of partitions
-function writefileData(filename, NumP) {
-    fetch("https://edfs-b732d-default-rtdb.firebaseio.com/root.json")
-        .then(res => res.json())
-        .then(data => {
-            // console.log(data)
-            // console.log(JSON.stringify(data))
-            for (let child in data) {
-                console.log(child)
-                firebasedata.push({
-                    id: firebasedata.length,
-                    isfile: false,
-                    name: child
-                })
-            }
-            setdatarry(firebasedata)
-            console.log(firebasedata)
-        })
-
-}

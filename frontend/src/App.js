@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Analyze from "./Analyze"
 import Home from "./Home"
-import Homecy from "./Homecy"
+import HomeFB from "./Home_firebase"
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,7 +15,7 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<HomeFB />} />
         <Route path="/analyze" element={<Analyze />} />
       </Routes>
     </Router>
