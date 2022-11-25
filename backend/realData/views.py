@@ -121,6 +121,7 @@ class RestView(AllView):
                 'latitude', 'longitude', 'categories']
     """
     def post(self, request):
+       
         path = request.data['path']
         self.k = request.data['k']
         obj1 = pd.read_csv(path);
@@ -139,22 +140,17 @@ class RestView(AllView):
     
     """
     Method: GET
-    URL: localhost:8000/api/restaurants/
-    body: 
-        {
-            "command": "checkTable",
-            "table": 0
-        }
+    URL: localhost:8000/api/restaurants/?command="checkTable"&table=0
     Returns: restaurants information in Partition Table
         fields =['business_id', 'name', 'rate', 'review_cnt', 'city', 
                 'latitude', 'longitude', 'categories']
     """
     def get(self, request, format=None):
-        command = request.data['command']
+        command = request.query_params.get('command')
         if command == 'checkTable':
-            table_num = request.data['table']
+            table_num = request.query_params.get('table')
             table = self.dict[int(table_num)]
-            restaurants = self.get_queries(table)
+            restaurants = request.get_queries(table)
             serializer = RestaurantSpecsSerializer(restaurants, many = True)
             return Response(serializer.data)
         if command == "cat":
@@ -207,25 +203,19 @@ class CityView(AllView):
     
     """
     Method: GET partition table info
-    URL: localhost:8000/api/city/
-    {
-        "command": "checkTable",
-        "table": 2
-    }
+    URL: localhost:8000/api/city/?command=checkTable&table=0
     Returns: restaurants information in Partition Table
         _type_: json array string
         fields =['name', 'rank', 'population']
         
     Method: GET partition table info
-    {
-        "command": "cat"
-    }
+    URL: localhost:8000/api/city/?command=cat
     Returns: CSV json string
     """
     def get(self, request, format=None):
-        command = request.data['command']
+        command = request.query_params.get('command')
         if command == 'checkTable':
-            table_num = request.data['table']
+            table_num = request.query_params.get('table')
             table = self.dict[int(table_num)]
             cities = self.get_queries(table)
             serializer = CitySpecsSerializer(cities, many = True)
@@ -273,16 +263,16 @@ class UserView(AllView):
     
     """
     Method: GET
-    URL: localhost:8000/api/city/?table=0
+    URL: localhost:8000/api/restUser/?command=checkTable&table=0
     parameters: table = 0
     Returns: restaurants information in Partition Table
         _type_: json array string
         fields =['name', 'rank', 'population']
     """
     def get(self, request, format=None):
-        command = request.data['command']
+        command = request.query_params.get('command')
         if command == 'checkTable':
-            table_num = self.request.data['table']
+            table_num = self.request.query_params.get('table')
             table = self.dict[int(table_num)]
             users = self.get_queries(table)
             serializer = UserSpecsSerializer(users, many = True)
@@ -335,9 +325,9 @@ class RateView(AllView):
         fields =['name', 'rank', 'population']
     """
     def get(self, request, format=None):
-        command = request.data['command']
+        command = request.query_params.get('command')
         if command == 'checkTable':
-            table_num = self.request.data['table']
+            table_num = self.request.query_params.get('table')
             table = self.dict[int(table_num)]
             rates = self.get_queries(table)
             serializer = RateSpecsSerializer(rates, many = True)

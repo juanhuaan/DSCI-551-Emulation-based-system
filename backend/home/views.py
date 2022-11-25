@@ -27,7 +27,7 @@ class CommandView(APIView):
         "absolute_path": "/user",
         "type":"DIRECTORY",
         "command":"mkdir_or_put"
-        "k":default 3
+        "k": 3
      }
     return: all the path information
     """
@@ -42,7 +42,7 @@ class CommandView(APIView):
                 return Response(status=status.HTTP_400_BAD_REQUEST)
             type = request.data['type']
             lst = path.split('/')
-            print(lst)
+            # print(lst)
             newDir = lst[-1]
             upperPath = '/'.join(lst[i] for i in range(len(lst) - 1));
             upperNode = self.get_current_path_inode(upperPath);
@@ -59,7 +59,9 @@ class CommandView(APIView):
                 locations = ""
                 for i in range (k):
                     locations += loc + str(i) + "_"
-                part = Part.objects.create(inode = newPath, locations = locations)
+                # print(locations)
+                # print(newPath.inode)
+                part = Part.objects.create(inode = newPath, location = locations)
                 part.save()
             paths = Paths.objects.all()
             serializer = PathSpecsSerializer(paths, many = True)
@@ -99,41 +101,26 @@ class CommandView(APIView):
     return: all the subpath information
     
     Func: checkAllPath
-    URL: localhost:8000/api/commands/
-    body: 
-        {
-            "absolute_path": "/user/John", 
-            "command": "checkAllPath"
-        }
+    URL: localhost:8000/api/commands/?command=checkAllPath&absolute_path=/user/John
     return: all the paths information
     
     Func: go back to upper directory
-    URL: localhost:8000/api/commands/
-    body: 
-        {
-            "absolute_path": "/user/john", 
-            "command": "goback"
-        }
+    URL: localhost:8000/api/commands/?command=goback&absolute_path=/user/John
     return: all the paths information
     
     Func: cat path
-    URL: localhost:8000/api/commands/
-    body: 
-        {
-            "absolute_path": "/user/john", 
-            "command": "cat"
-        }
+    URL: localhost:8000/api/commands/?command=cat&absolute_path=/user/John
     return: cat path
     """
     def get(self, request):
-        route = request.data['command']
+        route = request.query_params.get('command')
         if (route == 'checkAllPath'):
             paths = Paths.objects.all()
             serializer = PathSpecsSerializer(paths, many = True)
             return Response(serializer.data)
         
         elif(route == 'ls'):
-            path = request.data['absolute_path']
+            path = request.query_params.get('absolute_path')
             curId = self.get_current_path_inode(path)
             curObj = Paths.objects.get(inode = curId)
             allChild = Relations.objects.filter(parent=curObj)
@@ -150,7 +137,7 @@ class CommandView(APIView):
             return Response(serializer.data)
         
         elif (route == 'goback'):
-            path = request.data['absolute_path']
+            path = request.query_params.get('absolute_path')
             lst = path.split('/')
             upperPath = '/'.join(lst[i] for i in range(len(lst) - 1));
             upperNode = self.get_current_path_inode(upperPath);
@@ -163,7 +150,7 @@ class CommandView(APIView):
             serializer = PathSpecsSerializer(res, many = True)
             return Response(serializer.data)
         elif (route == 'cat'):
-            path = request.data['absolute_path']
+            path = request.query_params.get('absolute_path')
             lst = path.split('/')
             filepath = lst[-1]
             obj1 = pd.read_csv('dataSet'+ filepath);
