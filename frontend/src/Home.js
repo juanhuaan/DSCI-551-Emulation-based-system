@@ -27,6 +27,18 @@ export default function Home() {
         "type": "DIRECTORY",
         "command": "mkdir_or_put"
     };
+
+    const makeAPICall = async () => {
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/commands/?absolute_path=/&command=checkAllPath", { mode: 'cors' });
+            const data = await response.json();
+            console.log({ data })
+
+        }
+        catch (e) {
+            console.error(e)
+        }
+    }
     // const invocation = new XMLHttpRequest();
     // const url1 = "http://127.0.0.1:8000/api/commands/?absolute_path=/&command=checkAllPath"
     // const handler = async (data) => {
@@ -71,16 +83,7 @@ export default function Home() {
         const firebasedata = []
         console.log("effect run");
         //API call
-        let para = {
-            "absolute_path": "/user",
-            "command": "ls"
-        };
-
-        // fetch("http://127.0.0.1:8000/api/commands/", {
-        //     method: 'GET',
-        //     mode: 'cors',
-        //     body: JSON.stringify(para),
-        // }).then(res => res.json()).then(data => console.log(data))
+        makeAPICall();
     }, [])
 
     if (datarry === null) {
