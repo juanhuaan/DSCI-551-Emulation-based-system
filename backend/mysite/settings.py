@@ -43,10 +43,22 @@ INSTALLED_APPS = [
     'fireapp',
     'rest_framework',
     'realData',
-    # 'Django-sharding'
+    'corsheaders'
+
+]
+MIDDLEWARE = [
+
+'corsheaders.middleware.CorsMiddleware',
+'django.middleware.common.CommonMiddleware',
 
 ]
 
+CORS_ALLOWED_ORIGINS = [
+
+"http://localhost:8000",
+"http://127.0.0.1:0000"
+
+]
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
