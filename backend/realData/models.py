@@ -31,8 +31,8 @@ class Restaurants(models.Model):
     rate = models.IntegerField()
     review_cnt = models.IntegerField()
     city = models.TextField(blank=True)
-    latitude = models.FloatField()
-    longitude =  models.FloatField()
+    latitude = models.FloatField(default=0)
+    longitude =  models.FloatField(default=0)
     categories = models.TextField(blank=True)
     class Meta:
         abstract = True

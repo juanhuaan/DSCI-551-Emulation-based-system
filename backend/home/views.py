@@ -13,7 +13,12 @@ import uuid
 # Create your views here.
 
 class CommandView(APIView):
-    
+    dict = {
+        "rest.csv" :"Rest",
+        "rate.csv" :"Rate",
+        "city.csv" :"City",
+        "user.csv" :"User"
+    }
     """
     Method: POST
     Function: mkdir, put
@@ -22,10 +27,12 @@ class CommandView(APIView):
         "absolute_path": "/user",
         "type":"DIRECTORY",
         "command":"mkdir_or_put"
+        "k":default 3
      }
     return: all the path information
     """
     def post(self, request):
+        k = 3
         route = request.data['command']
         if (route == "mkdir_or_put"):
             path = request.data['absolute_path']
@@ -45,6 +52,15 @@ class CommandView(APIView):
             newPath.save()
             newRelation = Relations.objects.create(parent = upperObj, child = newPath)
             newRelation.save()
+            if (type == "FILE"):
+                k = request.data['k']
+                arr_temp = newDir.split(".")
+                loc = arr_temp[-2]
+                locations = ""
+                for i in range (k):
+                    locations += loc + str(i) + "_"
+                part = Part.objects.create(inode = newPath, locations = locations)
+                part.save()
             paths = Paths.objects.all()
             serializer = PathSpecsSerializer(paths, many = True)
             return Response(serializer.data)
@@ -74,7 +90,7 @@ class CommandView(APIView):
     """
     Method: GET
     Func: ls
-    URL: localhost:8000/api/commands/?command=ls
+    URL: localhost:8000/api/commands/
     body: 
         {
             "absolute_path": ' /user', 
@@ -86,7 +102,7 @@ class CommandView(APIView):
     URL: localhost:8000/api/commands/
     body: 
         {
-            "absolute_path": "/user/Amy", 
+            "absolute_path": "/user/John", 
             "command": "checkAllPath"
         }
     return: all the paths information
@@ -99,6 +115,15 @@ class CommandView(APIView):
             "command": "goback"
         }
     return: all the paths information
+    
+    Func: cat path
+    URL: localhost:8000/api/commands/
+    body: 
+        {
+            "absolute_path": "/user/john", 
+            "command": "cat"
+        }
+    return: cat path
     """
     def get(self, request):
         route = request.data['command']
@@ -137,6 +162,13 @@ class CommandView(APIView):
                 res.append(Paths.objects.get(inode = childInode))
             serializer = PathSpecsSerializer(res, many = True)
             return Response(serializer.data)
+        elif (route == 'cat'):
+            path = request.data['absolute_path']
+            lst = path.split('/')
+            filepath = lst[-1]
+            obj1 = pd.read_csv('dataSet'+ filepath);
+            jsonObj = obj1.to_json(orient = 'records');
+            return Response(jsonObj)
             
      
     """
