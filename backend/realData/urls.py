@@ -1,6 +1,6 @@
 from django.urls import path
 from django.conf.urls import include
-from .views import RestView,CityView,UserView,RateView
+from .views import RestView,CityView,UserView,RateView, MapView
 from rest_framework.routers import DefaultRouter
 
 # router = DefaultRouter();
@@ -11,4 +11,5 @@ urlpatterns = [
     path('city/', CityView.as_view()),
     path('restUser/', UserView.as_view()),
     path('rate/', RateView.as_view()),
+    path('mapreduce/', MapView.as_view())
 ]

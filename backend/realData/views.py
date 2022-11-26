@@ -7,6 +7,7 @@ from .serializer import RestaurantSpecsSerializer,CitySpecsSerializer,UserSpecsS
 import pandas as pd
 from http import HTTPStatus
 import json
+from django.db.models import Max
 
 # Create your views here.
 
@@ -282,8 +283,7 @@ class UserView(AllView):
             jsonObj = obj1.to_json(orient = 'records');
             return Response(jsonObj)
         
-class RateView(AllView):
-    
+class RateView(AllView):      
     k = 3
     dict = {   
             0 : Rate0,
@@ -318,7 +318,7 @@ class RateView(AllView):
     
     """
     Method: GET
-    URL: localhost:8000/api/city/?table=0
+    URL: localhost:8000/api/city/?command=checkTable&table=0
     parameters: table = 0
     Returns: restaurants information in Partition Table
         _type_: json array string
@@ -334,7 +334,7 @@ class RateView(AllView):
             return Response(serializer.data)
         if command == "cat":
             obj1 = pd.read_csv('dataSet/city.csv');
-            jsonObj = obj1.to_json(orient = 'records');
+            jsonObj = json.dumps(obj1)
             return Response(jsonObj)
     
     def delete(self, request):
@@ -342,4 +342,150 @@ class RateView(AllView):
         Rate1.objects.all().delete()
         Rate2.objects.all().delete()
         return Response(status= HTTPStatus.NO_CONTENT) 
+    
+class MapView(AllView):
+    k = 3
+    dict = {   
+            0 : City0,
+            1 : City1,
+            2 : City2
+        }
+    """
+    Method: GET
+    Function:find the score is k(3) and in city (Los Angeles) all the restaurant information
+    URL: localhost:8000/api/mapreduce/?dataSet=restaurants&score=3&city=Los Angeles
+    
+    Function:find the rank of population is among[rankmin, rankmax) and score is k(3) restaurants total number
+    URL: localhost:8000/api/mapreduce/?dataSet=cityAndRest&rankmin=5&rankmax=10&score=5
+    
+    Function:find the rank of population is among[rankmin, rankmax) restaurants total number
+    URL: localhost:8000/api/mapreduce/?dataSet=cityAndRest&rankmin=5&rankmax=10&score=5
+    
+    Funtion: find top k review number restaurant
+    URL: localhost:8000/api/mapreduce/?dataSet=restaurants&top_review_num=3
+    """
+    def get(self, request, format=None):
+        dataSet = request.query_params.get('dataSet')
+        minscore = request.query_params.get('score')
+        city = request.query_params.get('city')
+        top_review_num = request.query_params.get('top_review_num')
+        res = []
+        if (dataSet == 'restaurants' and top_review_num!= None):
+            topNum = int(top_review_num);
+            r0 = Rest0.objects.order_by('-review_cnt')[:topNum]
+            r1 = Rest1.objects.order_by('-review_cnt')[:topNum]
+            r2 = Rest2.objects.order_by('-review_cnt')[:topNum]
+            h = []
+            for obj in r0:
+                temp = {}
+                temp['review_cnt']= obj.review_cnt
+                temp['name']= obj.name
+                temp['city']= obj.city
+                temp['rate']= obj.rate
+                temp['business_id'] = obj.business_id
+                h.append(temp)
+            for obj in r1:
+                temp = {}
+                temp['review_cnt']= obj.review_cnt
+                temp['name']= obj.name
+                temp['city']= obj.city
+                temp['rate']= obj.rate
+                temp['business_id'] = obj.business_id
+                h.append(temp)
+            for obj in r2:
+                temp = {}
+                temp['review_cnt']= obj.review_cnt
+                temp['name']= obj.name
+                temp['city']= obj.city
+                temp['rate']= obj.rate
+                temp['business_id'] = obj.business_id
+                h.append(temp)
+            
+            h.sort(key=lambda x:x['review_cnt'], reverse=True)
+            for i in range (int(top_review_num)):
+                res.append(h[i])
+            data = {}
+            data['res'] = res;
+            return Response(data)
+        
+        if (dataSet == 'restaurants' and minscore != None and city != None):
+            r0 = Rest0.objects.filter(rate = minscore, city = city)
+            r1 = Rest1.objects.filter(rate = minscore, city = city)
+            r2 = Rest2.objects.filter(rate = minscore, city = city)
+            for obj in r0:
+                res.append(obj)
+            for obj in r1:
+                res.append(obj)
+            for obj in r2:
+                res.append(obj) 
+            serializer = RestaurantSpecsSerializer(res, many = True)
+            return Response(serializer.data)
+        
+        if (dataSet == 'restaurants' and minscore == None and city != None):
+            r0 = Rest0.objects.filter(city = city)
+            r1 = Rest1.objects.filter(city = city)
+            r2 = Rest2.objects.filter(city = city)
+            for obj in r0:
+                res.append(obj)
+            for obj in r1:
+                res.append(obj)
+            for obj in r2:
+                res.append(obj)
+            serializer = RestaurantSpecsSerializer(res, many = True)
+            return Response(serializer.data)
+        
+        if (dataSet == 'restaurants' and minscore != None and city == None):
+            r0 = Rest0.objects.filter(rate = minscore)
+            r1 = Rest1.objects.filter(rate = minscore)
+            r2 = Rest2.objects.filter(rate = minscore)
+            for obj in r0:
+                res.append(obj)
+            for obj in r1:
+                res.append(obj)
+            for obj in r2:
+                res.append(obj)
+            serializer = RestaurantSpecsSerializer(res, many = True)
+            return Response(serializer.data)
+        
+        if(dataSet == "cityAndRest"):
+            rankmin = int(request.query_params.get('rankmin'))
+            rankmax = int(request.query_params.get('rankmax'))
+            if (request.query_params.get('score') != None):
+                score = int(request.query_params.get('score'))
+                r0 = Rest0.objects.filter(rate = minscore)
+                r1 = Rest1.objects.filter(rate = minscore)
+                r2 = Rest2.objects.filter(rate = minscore)
+            else:
+                r0 = Rest0.objects.all();
+                r1 = Rest1.objects.all();
+                r2 = Rest2.objects.all();
+            res = []
+            for rank in range(rankmin, rankmax):
+                k=rank%3
+                num = 0
+                city = self.dict[k].objects.get(rank = rank)
+                temp = {}
+                temp['name'] = city.name
+                temp['rank'] = city.rank
+                temp['population'] = city.population
+                num += len(r0.filter(city = city.name))
+                num += len(r1.filter(city = city.name))
+                num += len(r2.filter(city = city.name))
+                temp['restNum'] = num
+                res.append(temp) 
+            data = {}
+            data['res'] = res;
+            # jsonObj = data.to_json(orient = 'records');
+            # print(res)
+            return Response(data)
+         
+        
+   
+        
+        
+            
+            
+                
+            
+    
         

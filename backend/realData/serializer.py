@@ -22,6 +22,8 @@ class RateSpecsSerializer(serializers.ModelSerializer):
         model = Rate0
         fields =['userId', 'restId', 'score']
 
+
+
         
 
             
