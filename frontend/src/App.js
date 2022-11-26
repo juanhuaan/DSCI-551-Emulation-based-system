@@ -16,7 +16,8 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomeFB />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/firebase" element={<HomeFB />} />
         <Route path="/analyze" element={<Analyze />} />
       </Routes>
     </Router>
