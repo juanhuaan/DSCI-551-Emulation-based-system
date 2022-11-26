@@ -8,28 +8,21 @@ import InputForm from "./components/InputForm";
 import Modal from "./components/Modal";
 import "./Home.css"
 import { Link } from "react-router-dom";
-import axios from 'axios'
-axios.defaults.baseURL = "http://127.0.0.1:8000/api"
-
+import axios from "axios";
 
 
 export default function Home() {
-    const rooturl = "https://edfs-b732d-default-rtdb.firebaseio.com/root";
+    const rooturl = "/";
     const [datarry, setdatarry] = React.useState(null)
     const [inputobj, setval] = React.useState({
-        id: 0,
+        id:"",
         isfile: true,
         name: ""
-    })
+    })  
     const [url, setUrl] = React.useState(rooturl);
-    const [loc, setLoc] = React.useState("root");
+    // const [loc, setLoc] = React.useState("");
     const [openModal, setOpenModal] = useState(false)
 
-    let para = {
-        "absolute_path": "/user/s",
-        "type": "DIRECTORY",
-        "command": "mkdir_or_put"
-    };
 
     //API FETCH CALL: ls
     const makeAPICall = async () => {
@@ -42,6 +35,15 @@ export default function Home() {
             console.error(e)
         }
     }
+
+    React.useEffect(() => {
+        const updatePath = async () => {
+            const res = await axios.get(`http://localhost:8000/api/commands/?absolute_path=${url}&command=ls`);
+            console.log(res.data)
+            setdatarry(res.data);
+        };
+        updatePath();
+    }, [url]);
 
     React.useEffect(() => {
         const firebasedata = []
@@ -66,7 +68,7 @@ export default function Home() {
         })
     }
 
-    //when submit the new object, the array display update and display on the screen
+    //when submit the new object, the array display update and display on the screen mkdir
     function handleSubmit(event) {
         event.preventDefault();
         setdatarry(prevarray =>
@@ -77,60 +79,72 @@ export default function Home() {
     }
 
     //when delete the object, the object remove from datarry list
-    const handleRemoveClick = (i) => {
+    const handleRemoveClick = async(i) => {
         console.log("remove", i);
         const list = [...datarry];
         list.splice(i, 1);
         setdatarry(list);
+        await axios.delete("http://127.0.0.1:8000/api/commands/", { data: { absolute_path: url , command:"deleteOnePath"} },{ mode: 'cors' });
         console.log(list);
         //TODO connect API Remove
 
     };
 
-    //click on the box and go into the subdirectory
+    //click on the box and go into the subdirectory ls
     const handleClick = (i) => {
-        const firebasedata = []
+        const curdata = []
         console.log(url)
-        let newUrl = url + "/" + datarry[i].name
+        let newUrl = ""
+        if (url === '/'){
+            newUrl ="/" + datarry[i].name
+        } else {
+            newUrl = url + "/" + datarry[i].name
+        }
         setUrl(newUrl);
         //this is to realize ls
-        fetch(newUrl + ".json")
-            .then(res => res.json())
-            .then(data => {
-                for (let child in data) {
-                    console.log(child)
-                    firebasedata.push({
-                        id: firebasedata.length,
-                        isfile: false,
-                        name: child
+        fetch(`localhost:8000/api/commands/?command=ls&absolute_path=${newUrl}`,{ mode: 'cors' })
+            .then (res => res.json)
+            .then (data => {
+               for (let child in data) {
+                    curdata.push ({
+                        id : child.inode,
+                        isFile: child.pathType === "FILE"?true:false,
+                        name: child.name
                     })
-                }
-                console.log(firebasedata)
-                setdatarry(firebasedata)
+               }
+               setdatarry(curdata)
             })
-        setLoc(newUrl.substring(newUrl.lastIndexOf("/")))
+        setUrl(newUrl)
     }
 
     //go to the previous directory
-    const handleGoback = () => {
-        console.log(url);
-        let firebasedata = []
-        let prevUrl = url.substring(0, url.lastIndexOf("/"))
-        setUrl(prevUrl);
-        fetch(prevUrl + ".json")
-            .then(res => res.json())
-            .then(data => {
-                for (let child in data) {
-                    firebasedata.push({
-                        id: firebasedata.length,
-                        isfile: false,
-                        name: child
-                    })
-                }
-                setdatarry(firebasedata)
+    const handleGoback = async () => {
+        try {
+            console.log(url);
+            let predata = []
+            let prevUrl = url.substring(0, url.lastIndexOf("/"))
+            setUrl(prevUrl);
+            fetch(`localhost:8000/api/commands/?absolute_path=${prevUrl}&command=ls`,{ mode: 'cors' })
+            .then (res => res.json)
+            .then (data => {
+               for (let child in data) {
+                predata.push ({
+                    id : child.inode,
+                    isFile: child.pathType === "FILE"?true:false,
+                    name: child.name
+                })
+               }
+               setdatarry(predata)
             })
-        setLoc(prevUrl.substring(prevUrl.lastIndexOf("/")))
+            setUrl(prevUrl)
+        }
+        catch (e) {
+            console.error(e)
+        }
     }
+
+   
+  
 
     //list of boxes 
     const arrayelements = datarry.map(item => {
@@ -153,7 +167,7 @@ export default function Home() {
         <div className="App">
 
             <Nav
-                currentdirectory={loc}
+                currentdirectory={url}
                 goback={() => handleGoback()}
             />
 
@@ -177,7 +191,5 @@ export default function Home() {
             {openModal && <Modal closeModal={setOpenModal} />}
 
         </div>
-
-
     )
 }
