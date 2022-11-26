@@ -14,16 +14,13 @@
 }
 
 .left {
-  /* margin-left: 24px; */
   flex: 80%;
   margin-left: 24px;
-  /* overflow-x: auto; */
-
 }
 
 .right {
   margin-top: 10px;
-  margin-right: 20px;
+  margin-right: 10px;
   flex: 10%
 }
 

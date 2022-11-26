@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import Box from "./components/Box";
 import Nav from "./components/Nav";
-import InputForm from "./components/InputForm";
 import Modal from "./components/Modal";
 import "./Home.css"
 import { Link } from "react-router-dom";
 import { db } from './firebase'
 import { ref, set, onValue, remove } from "firebase/database";
-
 
 export default function Home() {
     const rooturl = "https://edfs-b732d-default-rtdb.firebaseio.com/root";
@@ -22,7 +20,7 @@ export default function Home() {
     const [openModal, setOpenModal] = useState(false)
 
     /* functions of CRUD of firebase */
-    //API: mkdir
+    //API: mkdir/put
     function writeData(dirc, content) {
         set(ref(db, dir + dirc), content);
     }
@@ -53,11 +51,19 @@ export default function Home() {
         })
     }
 
+    //API: cat
+    function displayData(dirc) {
+
+    }
+
+    /* end of API call */
+
     //run once when start the app
     React.useEffect(() => {
-        readData(dir)
         console.log("effect run");
+        readData(dir)
     }, [])
+
 
     if (datarry === null) {
         return <>Loading</>
@@ -66,6 +72,7 @@ export default function Home() {
     //when people edit the input field, change the object information
     function handleChange(event) {
         const { name, value, type, checked } = event.target;
+        console.log("inside handle change")
         setval(prevobj => {
             return {
                 ...prevobj,
@@ -73,26 +80,24 @@ export default function Home() {
                 [name]: type === "checkbox" ? checked : value
             }
         })
-        console.log("inside handle change")
-        console.log(inputobj)
     }
 
     //when submit the new object, the array display update and display on the screen
     function handleSubmit(event) {
-
         event.preventDefault();
         console.log("insdie handle submit")
+        // toggleSubmit(!submit)
         console.log(inputobj)
-        setdatarry(prevarray =>
-            [...prevarray, inputobj]
-        )
-        console.log("1111111111111")
-        console.log(datarry)
         //TODO connect API Add
-        writeData("/" + inputobj.name, "content of picasso file")
+        if (inputobj.isfile) {
+            //get three partitions
+            writeData("/f" + inputobj.name + '1', "content of picasso file1")
+            writeData("/f" + inputobj.name + '2', "content of picasso file2")
+            writeData("/f" + inputobj.name + '3', "content of picasso file3")
+        } else {
+            writeData("/d" + inputobj.name, "1")
+        }
         readData(dir)
-        console.log("2222222222222")
-        console.log(datarry)
     }
 
     //when delete the object, the object remove from datarry list
@@ -150,13 +155,13 @@ export default function Home() {
                     {arrayelements}
 
                     {/* input form */}
-                    <form className="iform" onSubmit={handleSubmit}>
+                    <form className="iform" onSubmit={e => handleSubmit(e)}>
                         <label htmlFor="name">Please input the name of File/Directory</label>
                         <br></br>
                         <input
                             type="text"
                             placeholder="name"
-                            onChange={handleChange}
+                            onChange={e => handleChange(e)}
                             name="name"
                             value={inputobj.name}
                         />
@@ -165,7 +170,7 @@ export default function Home() {
                             type="checkbox"
                             id="isfile"
                             checked={inputobj.isfile}
-                            onChange={handleChange}
+                            onChange={e => handleChange(e)}
                             name="isfile"
                         />
 
@@ -173,37 +178,54 @@ export default function Home() {
 
                         <br></br>
 
-                        <fieldset>
-                            <p>If yes, select the number of partitions</p>
-                            <input
-                                type="radio"
-                                id="1"
-                            />
-                            <label htmlFor="1">1</label>
-                            <br />
+                        {inputobj.isfile &&
+                            <div>
+                                <fieldset>
 
-                            <input
-                                type="radio"
-                                id="2"
-                            />
-                            <label htmlFor="2">2</label>
-                            <br />
+                                    <p>1. Select the number of partitions</p>
+                                    <input
+                                        type="radio"
+                                        id="1"
+                                        value='1'
+                                        onChange={handleChange}
+                                    />
+                                    <label htmlFor="1">1</label>
+                                    <br />
 
-                            <input
-                                type="radio"
-                                id="3"
-                            />
-                            <label htmlFor="3">3</label>
-                            <br />
-                        </fieldset>
+                                    <input
+                                        type="radio"
+                                        id="2"
+                                        value='2'
+                                        onChange={handleChange}
+                                    />
+                                    <label htmlFor="2">2</label>
+                                    <br />
+
+                                    <input
+                                        type="radio"
+                                        id="3"
+                                        value='3'
+                                        onChange={handleChange}
+                                    />
+                                    <label htmlFor="3">3</label>
+                                    <br />
+
+                                </fieldset>
+                                <label htmlFor="method">2. Select the method of partition</label>
+                                <select
+                                    id="method"
+                                // value={formData.favColor}
+                                // onChange={handleChange}
+                                // name="favColor"
+                                >
+                                    <option value="">-- Choose --</option>
+                                    <option value="even">even partition</option>
+                                    <option value="asci">First letter asci%n(partitions number)</option>
+                                </select>
+                            </div>}
+
                         <button className="button">Submit</button>
                     </form>
-                    {/* <InputForm
-                        submit={(e) => handleSubmit(e)}
-                        change={(e) => handleChange(e)}
-                        val={inputobj.name}
-                        checked={inputobj.isfile}
-                    /> */}
                 </div>
                 <div className="right">
                     <Link to="/analyze" className="button">Go analyzation</Link>
@@ -211,7 +233,5 @@ export default function Home() {
             </div>
             {openModal && <Modal closeModal={setOpenModal} />}
         </div>
-
-
     )
 }

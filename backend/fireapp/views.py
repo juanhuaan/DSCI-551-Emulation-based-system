@@ -70,26 +70,26 @@ def index(request):  # run when brower refreshed
                        "frate2": "https://edfs-b732d-default-rtdb.firebaseio.com/rate/rate2"}}}}}
     database.set(userdata)
 
-    # upload review data
-    make_json(review, review_data, 'uid')
-    if (database.child("review").get().val() == None):
-        database.child("review").set(review_data)
+    # # upload review data
+    # make_json(review, review_data, 'uid')
+    # if (database.child("review").get().val() == None):
+    #     database.child("review").set(review_data)
 
-    # upload user data
-    make_json(user, user_data, 'uid')
-    if (database.child("user").get().val() == None):
-        database.child("user").set(user_data)
+    # # upload user data
+    # make_json(user, user_data, 'uid')
+    # if (database.child("user").get().val() == None):
+    #     database.child("user").set(user_data)
 
-    # upload population data
-    make_json(population, population_data, 'Rank')
-    if (database.child("population").get().val() == None):
-        database.child("population").set(population_data)
+    # # upload population data
+    # make_json(population, population_data, 'Rank')
+    # if (database.child("population").get().val() == None):
+    #     database.child("population").set(population_data)
 
-    # upload restaurant data
-    make_json(restaurant, restaurant_data,
-              'business id')
-    if (database.child("restaurant").get().val() == None):
-        database.child("restaurant").set(restaurant_data)
+    # # upload restaurant data
+    # make_json(restaurant, restaurant_data,
+    #           'business id')
+    # if (database.child("restaurant").get().val() == None):
+    #     database.child("restaurant").set(restaurant_data)
 
     filename = 'cars'
     partition1 = database.child("data").child("cars1").get().key()
