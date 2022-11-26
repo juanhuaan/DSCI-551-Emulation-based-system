@@ -10,7 +10,7 @@
 
 .iform {
   margin-left: 10px;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 .gobackbutton {
@@ -27,10 +27,15 @@
 
 .directory {
   margin-top: 3%;
+  margin-right: 0px;
   display: inline-flex;
 }
 
 .name {
   margin-top: 0;
   text-align: center;
+}
+
+label {
+  margin-right: 10px;
 }

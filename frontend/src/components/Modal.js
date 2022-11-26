@@ -1,21 +1,22 @@
 import React from 'react'
 import "./Modal.css";
 
-function Modal({ closeModal }) {
+function Modal(props) {
+
     return (
         <div className='modalBackground'>
             <div className='modalContainer'>
                 <div className='titleCloseBtn'>
-                    <button onClick={() => closeModal(false)}>X</button>
+                    <button onClick={() => props.closeModal(false)}>X</button>
                 </div>
                 <div className='title'>
-                    <h1>Content of this file</h1>
+                    <h1>Location of the file:</h1>
                 </div>
                 <div className='body'>
-                    <p>the actual paragrah here</p>
+                    <p> {props.data} {props.content}</p>
                 </div>
                 <div id="cancelBtn" className='footer'>
-                    <button onClick={() => closeModal(false)}>Cancel</button>
+                    <button onClick={() => props.closeModal(false)}>Cancel</button>
                 </div>
             </div>
         </div>
