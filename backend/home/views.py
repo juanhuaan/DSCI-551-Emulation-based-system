@@ -93,11 +93,6 @@ class CommandView(APIView):
     Method: GET
     Func: ls
     URL: localhost:8000/api/commands/
-    body: 
-        {
-            "absolute_path": ' /user', 
-            "command": 'ls'
-        }
     return: all the subpath information
     
     Func: checkAllPath
