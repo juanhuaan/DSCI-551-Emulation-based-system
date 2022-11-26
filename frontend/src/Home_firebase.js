@@ -8,16 +8,19 @@ import { db } from './firebase'
 import { ref, set, onValue, remove } from "firebase/database";
 
 export default function Home() {
-    const rooturl = "https://edfs-b732d-default-rtdb.firebaseio.com/root";
-    const [datarry, setdatarry] = React.useState(null)
+    const [datarry, setdatarry] = React.useState([])
     const [inputobj, setval] = React.useState({
         id: 0,
         isfile: true,
-        name: ""
+        name: "",
+        part: "",
+        method: "even"
     })
     const [dir, setDir] = React.useState('/droot');
     const [loc, setLoc] = React.useState("root");
-    const [openModal, setOpenModal] = useState(false)
+    const [openModal, setOpenModal] = useState(false);
+    const [filedata, setFileData] = useState("");
+    const [filecontent, setFileContent] = useState("");
 
     /* functions of CRUD of firebase */
     //API: mkdir/put
@@ -52,8 +55,22 @@ export default function Home() {
     }
 
     //API: cat
-    function displayData(dirc) {
-
+    function displayData(dirc, file) {
+        console.log("in display data function!")
+        const firebasedata = []
+        const query = ref(db, dirc);
+        return onValue(query, (snapshot) => {
+            const data = snapshot.val();
+            if (snapshot.exists()) {
+                setFileData(data[file])
+                fetch(data[file] + ".json")
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data[0, 5])
+                        setFileContent(data[0, 5])
+                    })
+            }
+        })
     }
 
     /* end of API call */
@@ -128,6 +145,13 @@ export default function Home() {
         readData(prevUrl)
     }
 
+    //handle open modal
+    const handleOpenModal = (i) => {
+        setOpenModal(true);
+        const file = datarry[i].name
+        displayData(dir, file);
+    }
+
     //list of boxes 
     const arrayelements = datarry.map(item => {
         return (
@@ -137,7 +161,7 @@ export default function Home() {
                 isfile={item.isfile}
                 remove={() => handleRemoveClick(item.id)}
                 next={() => handleClick(item.id)}
-                openmodal={() => setOpenModal(true)}
+                openmodal={() => handleOpenModal(item.id)}
             />
         )
     })
@@ -153,11 +177,11 @@ export default function Home() {
                 <div className="left">
 
                     {arrayelements}
+                    <p>-------------------------------------------------------------------------</p>
 
                     {/* input form */}
                     <form className="iform" onSubmit={e => handleSubmit(e)}>
                         <label htmlFor="name">Please input the name of File/Directory</label>
-                        <br></br>
                         <input
                             type="text"
                             placeholder="name"
@@ -186,7 +210,9 @@ export default function Home() {
                                     <input
                                         type="radio"
                                         id="1"
+                                        name="part"
                                         value='1'
+                                        checked={inputobj.part === "1"}
                                         onChange={handleChange}
                                     />
                                     <label htmlFor="1">1</label>
@@ -195,7 +221,9 @@ export default function Home() {
                                     <input
                                         type="radio"
                                         id="2"
+                                        name="part"
                                         value='2'
+                                        checked={inputobj.part === "2"}
                                         onChange={handleChange}
                                     />
                                     <label htmlFor="2">2</label>
@@ -204,7 +232,9 @@ export default function Home() {
                                     <input
                                         type="radio"
                                         id="3"
+                                        name="part"
                                         value='3'
+                                        checked={inputobj.part === "3"}
                                         onChange={handleChange}
                                     />
                                     <label htmlFor="3">3</label>
@@ -214,9 +244,9 @@ export default function Home() {
                                 <label htmlFor="method">2. Select the method of partition</label>
                                 <select
                                     id="method"
-                                // value={formData.favColor}
-                                // onChange={handleChange}
-                                // name="favColor"
+                                    value={inputobj.method}
+                                    onChange={handleChange}
+                                    name="method"
                                 >
                                     <option value="">-- Choose --</option>
                                     <option value="even">even partition</option>
@@ -231,7 +261,10 @@ export default function Home() {
                     <Link to="/analyze" className="button">Go analyzation</Link>
                 </div>
             </div>
-            {openModal && <Modal closeModal={setOpenModal} />}
+            {openModal && <Modal
+                closeModal={setOpenModal}
+                data={JSON.stringify(filedata)}
+                content={JSON.stringify(filecontent)} />}
         </div>
     )
 }
