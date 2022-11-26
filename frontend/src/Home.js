@@ -1,3 +1,6 @@
+//In this file the SQL backend are connected to the frontend
+
+
 import React, { useState } from "react";
 import Box from "./components/Box";
 import Nav from "./components/Nav";
@@ -28,49 +31,17 @@ export default function Home() {
         "command": "mkdir_or_put"
     };
 
+    //API FETCH CALL: ls
     const makeAPICall = async () => {
         try {
             const response = await fetch("http://127.0.0.1:8000/api/commands/?absolute_path=/&command=checkAllPath", { mode: 'cors' });
             const data = await response.json();
             console.log({ data })
-
         }
         catch (e) {
             console.error(e)
         }
     }
-    // const invocation = new XMLHttpRequest();
-    // const url1 = "http://127.0.0.1:8000/api/commands/?absolute_path=/&command=checkAllPath"
-    // const handler = async (data) => {
-    //     try {
-    //         const res = await axios.get(`/commands/?absolute_path=/&command=checkAllPath`)
-    //         data = res.data
-    //         console.log(data)
-    //     } catch (err) {
-    //         console.error(err)
-    //     }
-    // }
-    // function callOther() {
-    //     if (invocation) {
-    //         invocation.open("GET", url, true);
-    //         invocation.withCredentials = true;
-    //         invocation.onreadystatechange = handler;
-    //         invocation.send();
-    //     }
-    // }
-    // callOther()
-
-    // fetchPaths();
-
-    // fetch('http://127.0.0.1:8000/api/commands/?absolute_path=/&command=checkAllPath', {
-    //     method: 'GET',
-    //     headers: {
-    //         'Access-Control-Allow-Origin': 'cors'
-    //     },
-
-    // })
-    //     .then(response => response.json())
-    //     .then(response => console.log(JSON.stringify(response)))
 
     React.useEffect(() => {
         const firebasedata = []
