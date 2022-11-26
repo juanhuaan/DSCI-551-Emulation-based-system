@@ -1,6 +1,4 @@
 import React from "react";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 
 export default function InputForm(props) {
     return (
@@ -19,7 +17,7 @@ export default function InputForm(props) {
                 className="cbox"
                 type="checkbox"
                 id="isfile"
-                checked={props.ischeck}
+                checked={props.checked}
                 onChange={props.change}
                 name="isfile"
             />

@@ -60,12 +60,14 @@ def index(request):  # run when brower refreshed
     data = {"cars3": 3}
     database.set(data)
 
-    userdata = {"root":
-                {"user":
-                 {"John":
-                  {"restaurants":
-                   {"r1": "https://edfs-b732d-default-rtdb.firebaseio.com/restaurant",
-                    "r2": "https://edfs-b732d-default-rtdb.firebaseio.com/restaurant"}}}}}
+    userdata = {"droot":
+                {"duser":
+                 {"dAmy": {
+                     "frate0": "https://edfs-b732d-default-rtdb.firebaseio.com/rate/rate0"
+                 }, "dJohn":
+                     {"drestaurants":
+                      {"frate1": "https://edfs-b732d-default-rtdb.firebaseio.com/rate/rate1",
+                       "frate2": "https://edfs-b732d-default-rtdb.firebaseio.com/rate/rate2"}}}}}
     database.set(userdata)
 
     # upload review data
