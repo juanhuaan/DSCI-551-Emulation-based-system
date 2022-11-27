@@ -9,48 +9,71 @@ import Modal from "./components/Modal";
 import "./Home.css"
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import { async } from "@firebase/util";
+const baseURL = "http://127.0.0.1:8000/api"
 
 export default function Home() {
-    const rooturl = "/";
-    const [datarry, setdatarry] = React.useState(null)
+    const [datarry, setdatarry] = React.useState([])
     const [inputobj, setval] = React.useState({
-        id:"",
+        id: 0,
         isfile: true,
-        name: ""
-    })  
-    const [url, setUrl] = React.useState(rooturl);
-    // const [loc, setLoc] = React.useState("");
-    const [openModal, setOpenModal] = useState(false)
+        name: "",
+        part: "",
+        method: "even"
+    })
+    const [dir, setDir] = React.useState('/');
+    const [loc, setLoc] = React.useState("/");
+    const [openModal, setOpenModal] = useState(false);
+    const [filedata, setFileData] = useState("");
+    const [filecontent, setFileContent] = useState("");
 
+    /* functions of CRUD of MYSQL */
 
-    //API FETCH CALL: ls
-    const makeAPICall = async () => {
-        try {
-            const response = await fetch("http://127.0.0.1:8000/api/commands/?absolute_path=/&command=checkAllPath", { mode: 'cors' });
-            const data = await response.json();
-            console.log({ data })
+    //API: ls
+    const readData = async(dirc)=> {
+        // console.log("in read data function!")
+        let curdata = []
+        setLoc(dirc.substring(dirc.lastIndexOf("/")))
+        const res = await fetch(baseURL+`/commands/?command=ls&absolute_path=${dirc}`,{ mode: 'cors' })
+        const data = await res.json();
+        // console.log(data)
+        for (let i = 0; i < data.length; i++) {
+            // console.log(data[i])
+            curdata.push ({
+                id : curdata.length,
+                isFile: data[i].pathType === "FILE"?true:false,
+                name: data[i].name
+            })
         }
-        catch (e) {
-            console.error(e)
-        }
+        // console.log(data[0].inode)
+        setdatarry(curdata)
+        // console.log(datarry)
     }
+    
 
-    React.useEffect(() => {
-        const updatePath = async () => {
-            const res = await axios.get(`http://localhost:8000/api/commands/?absolute_path=${url}&command=ls`);
-            console.log(res.data)
-            setdatarry(res.data);
-        };
-        updatePath();
-    }, [url]);
+    //API: cat
+    const displayData = async(file) => {
+        console.log("in display data function!")
+        let newUrl = ""
+        if (dir === '/'){
+            newUrl ="/" + file
+        } else {
+            newUrl = dir + "/" + file
+        }
+        const res = await fetch(baseURL+`/commands/?command=cat&absolute_path=${newUrl}`,{ mode: 'cors' })
+        const data = await res.json();
+        console.log(data)
+        // setFileContent(data[0, 5])
+    } 
 
+    /* end of API call */
+
+    //run once when start the app
     React.useEffect(() => {
-        const firebasedata = []
-        console.log("effect run");
-        //API call
-        makeAPICall();
+        // console.log("effect run");
+        readData(dir)
     }, [])
+
 
     if (datarry === null) {
         return <>Loading</>
@@ -59,6 +82,7 @@ export default function Home() {
     //when people edit the input field, change the object information
     function handleChange(event) {
         const { name, value, type, checked } = event.target;
+        console.log("inside handle change")
         setval(prevobj => {
             return {
                 ...prevobj,
@@ -68,83 +92,90 @@ export default function Home() {
         })
     }
 
-    //when submit the new object, the array display update and display on the screen mkdir
-    function handleSubmit(event) {
-        event.preventDefault();
-        setdatarry(prevarray =>
-            [...prevarray, inputobj]
-        )
-        console.log(datarry)
-        //TODO connect API Add
+    //when submit the new object, the array display update and display on the screen
+    const handleSubmit = async(event)=> {
+        try {
+            event.preventDefault();
+            console.log("insdie handle submit")
+            // toggleSubmit(!submit)
+            console.log(inputobj)
+            //TODO connect API Add
+            let newUrl = ""
+            if (dir === '/'){
+                newUrl ="/" + inputobj.name
+            } else {
+                newUrl = dir + "/" + inputobj.name
+            }
+            if (inputobj.isfile) {
+                //get three partitions
+                await axios.post(baseURL+`/commands/`, { absolute_path: newUrl, type:"FILE",command:"mkdir_or_put",k:inputobj.part});
+            } else {
+                await axios.post(baseURL+`/commands/`, { absolute_path: newUrl, type:"DIRECTORY", command:"mkdir_or_put"})
+            }
+            readData(dir)
+        } catch(e){
+            console.error(e)
+        }
+       
     }
 
     //when delete the object, the object remove from datarry list
     const handleRemoveClick = async(i) => {
-        console.log("remove", i);
-        const list = [...datarry];
-        list.splice(i, 1);
-        setdatarry(list);
-        await axios.delete("http://127.0.0.1:8000/api/commands/", { data: { absolute_path: url , command:"deleteOnePath"} },{ mode: 'cors' });
-        console.log(list);
-        //TODO connect API Remove
-
+        try {
+            console.log("remove", i);
+            console.log(datarry[i])
+            let deletepath = datarry[i].name;
+            console.log(deletepath)
+            //TODO connect API Remove
+            let target = ""
+            if (dir === '/'){
+                target ="/" + datarry[i].name
+            } else {
+                target = dir + "/" + datarry[i].name
+            }
+            await axios.delete(baseURL+"/commands/", {data:{ absolute_path: target, command:"deleteOnePath" }},{ mode: 'cors' });
+            readData(dir)
+        } catch(err) {
+            console.error(err)
+        }
+       
     };
 
     //click on the box and go into the subdirectory ls
-    const handleClick = (i) => {
-        const curdata = []
-        console.log(url)
+    const handleClick = async(i) => {
+        console.log(dir)
         let newUrl = ""
-        if (url === '/'){
+        if (dir === '/'){
             newUrl ="/" + datarry[i].name
         } else {
-            newUrl = url + "/" + datarry[i].name
+            newUrl = dir + "/" + datarry[i].name
         }
-        setUrl(newUrl);
+        console.log(newUrl)
+        setDir(newUrl);
         //this is to realize ls
-        fetch(`localhost:8000/api/commands/?command=ls&absolute_path=${newUrl}`,{ mode: 'cors' })
-            .then (res => res.json)
-            .then (data => {
-               for (let child in data) {
-                    curdata.push ({
-                        id : child.inode,
-                        isFile: child.pathType === "FILE"?true:false,
-                        name: child.name
-                    })
-               }
-               setdatarry(curdata)
-            })
-        setUrl(newUrl)
+        readData(newUrl)
     }
 
     //go to the previous directory
     const handleGoback = async () => {
         try {
-            console.log(url);
+            console.log(dir);
             let predata = []
-            let prevUrl = url.substring(0, url.lastIndexOf("/"))
-            setUrl(prevUrl);
-            fetch(`localhost:8000/api/commands/?absolute_path=${prevUrl}&command=ls`,{ mode: 'cors' })
-            .then (res => res.json)
-            .then (data => {
-               for (let child in data) {
-                predata.push ({
-                    id : child.inode,
-                    isFile: child.pathType === "FILE"?true:false,
-                    name: child.name
-                })
-               }
-               setdatarry(predata)
-            })
-            setUrl(prevUrl)
+            let prevUrl = dir.substring(0, dir.lastIndexOf("/"))
+            setDir(prevUrl);
+            readData(prevUrl)
         }
         catch (e) {
             console.error(e)
         }
     }
 
-   
-  
+    //handle open modal
+    const handleOpenModal = (i) => {
+        setOpenModal(true);
+        const file = datarry[i].name
+        displayData(file);
+    }
 
     //list of boxes 
     const arrayelements = datarry.map(item => {
@@ -155,41 +186,110 @@ export default function Home() {
                 isfile={item.isfile}
                 remove={() => handleRemoveClick(item.id)}
                 next={() => handleClick(item.id)}
-                openmodal={() => setOpenModal(true)}
+                openmodal={() => handleOpenModal(item.id)}
             />
         )
     })
 
-
     //html display
     return (
-
         <div className="App">
-
             <Nav
-                currentdirectory={url}
+                currentdirectory={loc}
                 goback={() => handleGoback()}
             />
-
-
             <div className="row">
                 <div className="left">
 
                     {arrayelements}
+                    <p>-------------------------------------------------------------------------</p>
 
-                    <InputForm
-                        submit={(e) => handleSubmit(e)}
-                        change={(e) => handleChange(e)}
-                        val={datarry.name}
-                        checked={datarry.isfile}
-                    />
+                    {/* input form */}
+                    <form className="iform" onSubmit={e => handleSubmit(e)}>
+                        <label htmlFor="name">Please input the name of File/Directory</label>
+                        <input
+                            type="text"
+                            placeholder="name"
+                            onChange={e => handleChange(e)}
+                            name="name"
+                            value={inputobj.name}
+                        />
+                        <br></br>
+                        <input
+                            type="checkbox"
+                            id="isfile"
+                            checked={inputobj.isfile}
+                            onChange={e => handleChange(e)}
+                            name="isfile"
+                        />
+
+                        <label className="labelforc" htmlFor="isfile">Is this a File?</label>
+
+                        <br></br>
+
+                        {inputobj.isfile &&
+                            <div>
+                                <fieldset>
+
+                                    <p>1. Select the number of partitions</p>
+                                    <input
+                                        type="radio"
+                                        id="1"
+                                        name="part"
+                                        value='1'
+                                        checked={inputobj.part === "1"}
+                                        onChange={handleChange}
+                                    />
+                                    <label htmlFor="1">1</label>
+                                    <br />
+
+                                    <input
+                                        type="radio"
+                                        id="2"
+                                        name="part"
+                                        value='2'
+                                        checked={inputobj.part === "2"}
+                                        onChange={handleChange}
+                                    />
+                                    <label htmlFor="2">2</label>
+                                    <br />
+
+                                    <input
+                                        type="radio"
+                                        id="3"
+                                        name="part"
+                                        value='3'
+                                        checked={inputobj.part === "3"}
+                                        onChange={handleChange}
+                                    />
+                                    <label htmlFor="3">3</label>
+                                    <br />
+
+                                </fieldset>
+                                <label htmlFor="method">2. Select the method of partition</label>
+                                <select
+                                    id="method"
+                                    value={inputobj.method}
+                                    onChange={handleChange}
+                                    name="method"
+                                >
+                                    <option value="">-- Choose --</option>
+                                    <option value="even">even partition</option>
+                                    <option value="asci">First letter asci%n(partitions number)</option>
+                                </select>
+                            </div>}
+
+                        <button className="button">Submit</button>
+                    </form>
                 </div>
                 <div className="right">
                     <Link to="/analyze" className="button">Go analyzation</Link>
                 </div>
             </div>
-            {openModal && <Modal closeModal={setOpenModal} />}
-
+            {openModal && <Modal
+                closeModal={setOpenModal}
+                data={JSON.stringify(filedata)}
+                content={JSON.stringify(filecontent)} />}
         </div>
     )
 }
