@@ -53,7 +53,7 @@ class CommandView(APIView):
             newRelation = Relations.objects.create(parent = upperObj, child = newPath)
             newRelation.save()
             if (type == "FILE"):
-                k = request.data['k']
+                k = (int)(request.data['k'])
                 arr_temp = newDir.split(".")
                 loc = arr_temp[-2]
                 locations = ""
@@ -174,6 +174,7 @@ class CommandView(APIView):
     """
     def delete(self, request):
         route = request.data['command']
+        
         if (route == 'deleteAllPath'):
             Paths.objects.all().delete()
             Relations.objects.all().delete()
