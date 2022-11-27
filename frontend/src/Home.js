@@ -41,11 +41,12 @@ export default function Home() {
             // console.log(data[i])
             curdata.push ({
                 id : curdata.length,
-                isFile: data[i].pathType === "FILE"?true:false,
+                isfile: data[i].pathType === "FILE"?true:false,
                 name: data[i].name
             })
         }
         // console.log(data[0].inode)
+        // console.log(curdata)
         setdatarry(curdata)
         // console.log(datarry)
     }
@@ -61,9 +62,10 @@ export default function Home() {
             newUrl = dir + "/" + file
         }
         const res = await fetch(baseURL+`/commands/?command=cat&absolute_path=${newUrl}`,{ mode: 'cors' })
-        const data = await res.json();
+        const pre = await res.json();
+        const data = JSON.parse(pre);
         console.log(data)
-        // setFileContent(data[0, 5])
+        setFileContent(data.slice(0,5))
     } 
 
     /* end of API call */
@@ -72,7 +74,7 @@ export default function Home() {
     React.useEffect(() => {
         // console.log("effect run");
         readData(dir)
-    }, [])
+    }, [dir, inputobj])
 
 
     if (datarry === null) {
@@ -112,7 +114,7 @@ export default function Home() {
             } else {
                 await axios.post(baseURL+`/commands/`, { absolute_path: newUrl, type:"DIRECTORY", command:"mkdir_or_put"})
             }
-            readData(dir)
+            // readData(dir)
         } catch(e){
             console.error(e)
         }
@@ -179,6 +181,7 @@ export default function Home() {
 
     //list of boxes 
     const arrayelements = datarry.map(item => {
+        console.log(datarry)
         return (
             <Box
                 key={item.id}
@@ -190,6 +193,10 @@ export default function Home() {
             />
         )
     })
+
+    
+   
+   
 
     //html display
     return (

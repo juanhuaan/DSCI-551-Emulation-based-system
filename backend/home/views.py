@@ -147,8 +147,10 @@ class CommandView(APIView):
         elif (route == 'cat'):
             path = request.query_params.get('absolute_path')
             lst = path.split('/')
-            filepath = lst[-1]
-            obj1 = pd.read_csv('dataSet'+ filepath);
+            filepath = lst[-1].strip()
+            # print(filepath)
+            # backend/dataSet/rest.csv
+            obj1 = pd.read_csv('dataSet/'+filepath);
             jsonObj = obj1.to_json(orient = 'records');
             return Response(jsonObj)
             

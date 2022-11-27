@@ -11,10 +11,9 @@ export default function Box(props) {
 
 
     return (
-
         <div className="box" onDoubleClick={props.isfile === true ? props.openmodal : props.next}>
             <div>
-                <img src={props.isfile === true ? file : folder} />
+                <img alt =" " src={props.isfile === true ? file : folder} />
                 <p className="name">{props.name}</p>
             </div>
             <Button className="deletebutton" variant="danger" onClick={props.remove}>Delete</Button>{' '}
