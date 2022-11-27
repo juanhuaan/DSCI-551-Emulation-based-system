@@ -1,6 +1,5 @@
 //In this file the SQL backend are connected to the frontend
 
-
 import React, { useState } from "react";
 import Box from "./components/Box";
 import Nav from "./components/Nav";
@@ -10,9 +9,10 @@ import "./Home.css"
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { async } from "@firebase/util";
-const baseURL = "http://127.0.0.1:8000/api"
+import Menu from "./components/Menu"
 
 export default function Home() {
+    const baseURL = "http://127.0.0.1:8000/api"
     const [datarry, setdatarry] = React.useState([])
     const [inputobj, setval] = React.useState({
         id: 0,
@@ -41,11 +41,13 @@ export default function Home() {
             // console.log(data[i])
             curdata.push({
                 id: curdata.length,
-                isFile: data[i].pathType === "FILE" ? true : false,
+                isfile: data[i].pathType === "FILE" ? true : false,
                 name: data[i].name
             })
         }
         // console.log(data[0].inode)
+        console.log("in read")
+        console.log(curdata)
         setdatarry(curdata)
         // console.log(datarry)
     }
@@ -112,22 +114,34 @@ export default function Home() {
             } else {
                 await axios.post(baseURL + `/commands/`, { absolute_path: newUrl, type: "DIRECTORY", command: "mkdir_or_put" })
             }
-            readData(dir)
+            // readData(dir)
         } catch (e) {
             console.error(e)
         }
+        console.log("in submit")
+        readData(dir)
 
     }
 
     //when delete the object, the object remove from datarry list
     const handleRemoveClick = async (i) => {
-        console.log("remove", i);
-        const list = [...datarry];
-        list.splice(i, 1);
-        setdatarry(list);
-        await axios.delete("http://127.0.0.1:8000/api/commands/", { data: { absolute_path: url, command: "deleteOnePath" } }, { mode: 'cors' });
-        console.log(list);
-        //TODO connect API Remove
+        try {
+            console.log("remove", i);
+            console.log(datarry[i])
+            let deletepath = datarry[i].name;
+            console.log(deletepath)
+            //TODO connect API Remove
+            let target = ""
+            if (dir === '/') {
+                target = "/" + datarry[i].name
+            } else {
+                target = dir + "/" + datarry[i].name
+            }
+            await axios.delete(baseURL + "/commands/", { data: { absolute_path: target, command: "deleteOnePath" } }, { mode: 'cors' });
+            readData(dir)
+        } catch (err) {
+            console.error(err)
+        }
 
     };
 
@@ -135,7 +149,7 @@ export default function Home() {
     const handleClick = async (i) => {
         console.log(dir)
         let newUrl = ""
-        if (url === '/') {
+        if (dir === '/') {
             newUrl = "/" + datarry[i].name
         } else {
             newUrl = dir + "/" + datarry[i].name
@@ -143,19 +157,7 @@ export default function Home() {
         console.log(newUrl)
         setDir(newUrl);
         //this is to realize ls
-        fetch(`localhost:8000/api/commands/?command=ls&absolute_path=${newUrl}`, { mode: 'cors' })
-            .then(res => res.json)
-            .then(data => {
-                for (let child in data) {
-                    curdata.push({
-                        id: child.inode,
-                        isFile: child.pathType === "FILE" ? true : false,
-                        name: child.name
-                    })
-                }
-                setdatarry(curdata)
-            })
-        setUrl(newUrl)
+        readData(newUrl)
     }
 
     //go to the previous directory
@@ -163,32 +165,26 @@ export default function Home() {
         try {
             console.log(dir);
             let predata = []
-            let prevUrl = url.substring(0, url.lastIndexOf("/"))
-            setUrl(prevUrl);
-            fetch(`localhost:8000/api/commands/?absolute_path=${prevUrl}&command=ls`, { mode: 'cors' })
-                .then(res => res.json)
-                .then(data => {
-                    for (let child in data) {
-                        predata.push({
-                            id: child.inode,
-                            isFile: child.pathType === "FILE" ? true : false,
-                            name: child.name
-                        })
-                    }
-                    setdatarry(predata)
-                })
-            setUrl(prevUrl)
+            let prevUrl = dir.substring(0, dir.lastIndexOf("/"))
+            setDir(prevUrl);
+            readData(prevUrl)
         }
         catch (e) {
             console.error(e)
         }
     }
 
-
-
+    //handle open modal
+    const handleOpenModal = (i) => {
+        setOpenModal(true);
+        const file = datarry[i].name
+        displayData(file);
+    }
 
     //list of boxes 
     const arrayelements = datarry.map(item => {
+        console.log("in map")
+        console.log(datarry)
         return (
             <Box
                 key={item.id}
@@ -207,6 +203,7 @@ export default function Home() {
             <Nav
                 currentdirectory={loc}
                 goback={() => handleGoback()}
+                database="「SQL」"
             />
             <div className="row">
                 <div className="left">

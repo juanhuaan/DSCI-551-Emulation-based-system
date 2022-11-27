@@ -166,23 +166,10 @@ export default function Home() {
     //html display
     return (
         <div className="App">
-            <Navbar bg="dark" variant="dark">
-                <Container>
-                    <Navbar.Brand href="#home">
-                        <img
-                            alt=""
-                            src="./images/logo.png"
-                            width="16"
-                            height="16"
-                            className="d-inline-block align-top"
-                        />{' '}
-                        Firebase Realtime Database
-                    </Navbar.Brand>
-                </Container>
-            </Navbar>
             <Nav
                 currentdirectory={loc}
                 goback={() => handleGoback()}
+                database="「FIREBASE」"
             />
             <div className="row">
                 <div className="left">
