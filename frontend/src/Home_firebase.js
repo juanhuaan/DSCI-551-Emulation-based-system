@@ -6,6 +6,8 @@ import "./Home.css"
 import { Link } from "react-router-dom";
 import { db } from './firebase'
 import { ref, set, onValue, remove } from "firebase/database";
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
 
 export default function Home() {
     const [datarry, setdatarry] = React.useState([])
@@ -108,9 +110,9 @@ export default function Home() {
         //TODO connect API Add
         if (inputobj.isfile) {
             //get three partitions
-            writeData("/f" + inputobj.name + '1', "content of picasso file1")
-            writeData("/f" + inputobj.name + '2', "content of picasso file2")
-            writeData("/f" + inputobj.name + '3', "content of picasso file3")
+            writeData("/f" + inputobj.name + '1', `https://edfs-b732d-default-rtdb.firebaseio.com/${inputobj.name}/${inputobj.name}1`)
+            writeData("/f" + inputobj.name + '2', `https://edfs-b732d-default-rtdb.firebaseio.com/${inputobj.name}/${inputobj.name}2`)
+            writeData("/f" + inputobj.name + '3', `https://edfs-b732d-default-rtdb.firebaseio.com/${inputobj.name}/${inputobj.name}3`)
         } else {
             writeData("/d" + inputobj.name, "1")
         }
@@ -119,12 +121,7 @@ export default function Home() {
 
     //when delete the object, the object remove from datarry list
     const handleRemoveClick = (i) => {
-        console.log("remove", i);
         let deletepath = datarry[i].name;
-        const list = [...datarry];
-        list.splice(i, 1);
-        setdatarry(list);
-        console.log(list);
         //TODO connect API Remove
         deleteData("/" + deletepath)
         readData(dir)
@@ -157,7 +154,7 @@ export default function Home() {
         return (
             <Box
                 key={item.id}
-                name={item.name}
+                name={item.name.substring(1)}
                 isfile={item.isfile}
                 remove={() => handleRemoveClick(item.id)}
                 next={() => handleClick(item.id)}
@@ -169,6 +166,20 @@ export default function Home() {
     //html display
     return (
         <div className="App">
+            <Navbar bg="dark" variant="dark">
+                <Container>
+                    <Navbar.Brand href="#home">
+                        <img
+                            alt=""
+                            src="./images/logo.png"
+                            width="16"
+                            height="16"
+                            className="d-inline-block align-top"
+                        />{' '}
+                        Firebase Realtime Database
+                    </Navbar.Brand>
+                </Container>
+            </Navbar>
             <Nav
                 currentdirectory={loc}
                 goback={() => handleGoback()}

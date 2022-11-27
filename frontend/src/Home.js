@@ -15,10 +15,10 @@ export default function Home() {
     const rooturl = "/";
     const [datarry, setdatarry] = React.useState(null)
     const [inputobj, setval] = React.useState({
-        id:"",
+        id: "",
         isfile: true,
         name: ""
-    })  
+    })
     const [url, setUrl] = React.useState(rooturl);
     // const [loc, setLoc] = React.useState("");
     const [openModal, setOpenModal] = useState(false)
@@ -79,12 +79,12 @@ export default function Home() {
     }
 
     //when delete the object, the object remove from datarry list
-    const handleRemoveClick = async(i) => {
+    const handleRemoveClick = async (i) => {
         console.log("remove", i);
         const list = [...datarry];
         list.splice(i, 1);
         setdatarry(list);
-        await axios.delete("http://127.0.0.1:8000/api/commands/", { data: { absolute_path: url , command:"deleteOnePath"} },{ mode: 'cors' });
+        await axios.delete("http://127.0.0.1:8000/api/commands/", { data: { absolute_path: url, command: "deleteOnePath" } }, { mode: 'cors' });
         console.log(list);
         //TODO connect API Remove
 
@@ -95,24 +95,24 @@ export default function Home() {
         const curdata = []
         console.log(url)
         let newUrl = ""
-        if (url === '/'){
-            newUrl ="/" + datarry[i].name
+        if (url === '/') {
+            newUrl = "/" + datarry[i].name
         } else {
             newUrl = url + "/" + datarry[i].name
         }
         setUrl(newUrl);
         //this is to realize ls
-        fetch(`localhost:8000/api/commands/?command=ls&absolute_path=${newUrl}`,{ mode: 'cors' })
-            .then (res => res.json)
-            .then (data => {
-               for (let child in data) {
-                    curdata.push ({
-                        id : child.inode,
-                        isFile: child.pathType === "FILE"?true:false,
+        fetch(`localhost:8000/api/commands/?command=ls&absolute_path=${newUrl}`, { mode: 'cors' })
+            .then(res => res.json)
+            .then(data => {
+                for (let child in data) {
+                    curdata.push({
+                        id: child.inode,
+                        isFile: child.pathType === "FILE" ? true : false,
                         name: child.name
                     })
-               }
-               setdatarry(curdata)
+                }
+                setdatarry(curdata)
             })
         setUrl(newUrl)
     }
@@ -124,18 +124,18 @@ export default function Home() {
             let predata = []
             let prevUrl = url.substring(0, url.lastIndexOf("/"))
             setUrl(prevUrl);
-            fetch(`localhost:8000/api/commands/?absolute_path=${prevUrl}&command=ls`,{ mode: 'cors' })
-            .then (res => res.json)
-            .then (data => {
-               for (let child in data) {
-                predata.push ({
-                    id : child.inode,
-                    isFile: child.pathType === "FILE"?true:false,
-                    name: child.name
+            fetch(`localhost:8000/api/commands/?absolute_path=${prevUrl}&command=ls`, { mode: 'cors' })
+                .then(res => res.json)
+                .then(data => {
+                    for (let child in data) {
+                        predata.push({
+                            id: child.inode,
+                            isFile: child.pathType === "FILE" ? true : false,
+                            name: child.name
+                        })
+                    }
+                    setdatarry(predata)
                 })
-               }
-               setdatarry(predata)
-            })
             setUrl(prevUrl)
         }
         catch (e) {
@@ -143,8 +143,8 @@ export default function Home() {
         }
     }
 
-   
-  
+
+
 
     //list of boxes 
     const arrayelements = datarry.map(item => {
