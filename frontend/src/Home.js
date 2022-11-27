@@ -1,6 +1,5 @@
 //In this file the SQL backend are connected to the frontend
 
-
 import React, { useState } from "react";
 import Box from "./components/Box";
 import Nav from "./components/Nav";
