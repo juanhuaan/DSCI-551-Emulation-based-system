@@ -9,9 +9,10 @@ import "./Home.css"
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { async } from "@firebase/util";
-const baseURL = "http://127.0.0.1:8000/api"
+import Menu from "./components/Menu"
 
 export default function Home() {
+    const baseURL = "http://127.0.0.1:8000/api"
     const [datarry, setdatarry] = React.useState([])
     const [inputobj, setval] = React.useState({
         id: 0,
@@ -29,11 +30,11 @@ export default function Home() {
     /* functions of CRUD of MYSQL */
 
     //API: ls
-    const readData = async(dirc)=> {
+    const readData = async (dirc) => {
         // console.log("in read data function!")
         let curdata = []
         setLoc(dirc.substring(dirc.lastIndexOf("/")))
-        const res = await fetch(baseURL+`/commands/?command=ls&absolute_path=${dirc}`,{ mode: 'cors' })
+        const res = await fetch(baseURL + `/commands/?command=ls&absolute_path=${dirc}`, { mode: 'cors' })
         const data = await res.json();
         // console.log(data)
         for (let i = 0; i < data.length; i++) {
@@ -49,14 +50,14 @@ export default function Home() {
         setdatarry(curdata)
         // console.log(datarry)
     }
-    
+
 
     //API: cat
-    const displayData = async(file) => {
+    const displayData = async (file) => {
         console.log("in display data function!")
         let newUrl = ""
-        if (dir === '/'){
-            newUrl ="/" + file
+        if (dir === '/') {
+            newUrl = "/" + file
         } else {
             newUrl = dir + "/" + file
         }
@@ -94,7 +95,7 @@ export default function Home() {
     }
 
     //when submit the new object, the array display update and display on the screen
-    const handleSubmit = async(event)=> {
+    const handleSubmit = async (event) => {
         try {
             event.preventDefault();
             console.log("insdie handle submit")
@@ -102,26 +103,28 @@ export default function Home() {
             console.log(inputobj)
             //TODO connect API Add
             let newUrl = ""
-            if (dir === '/'){
-                newUrl ="/" + inputobj.name
+            if (dir === '/') {
+                newUrl = "/" + inputobj.name
             } else {
                 newUrl = dir + "/" + inputobj.name
             }
             if (inputobj.isfile) {
                 //get three partitions
-                await axios.post(baseURL+`/commands/`, { absolute_path: newUrl, type:"FILE",command:"mkdir_or_put",k:inputobj.part});
+                await axios.post(baseURL + `/commands/`, { absolute_path: newUrl, type: "FILE", command: "mkdir_or_put", k: inputobj.part });
             } else {
-                await axios.post(baseURL+`/commands/`, { absolute_path: newUrl, type:"DIRECTORY", command:"mkdir_or_put"})
+                await axios.post(baseURL + `/commands/`, { absolute_path: newUrl, type: "DIRECTORY", command: "mkdir_or_put" })
             }
             // readData(dir)
         } catch(e){
             console.error(e)
         }
-       
+        console.log("in submit")
+        readData(dir)
+
     }
 
     //when delete the object, the object remove from datarry list
-    const handleRemoveClick = async(i) => {
+    const handleRemoveClick = async (i) => {
         try {
             console.log("remove", i);
             console.log(datarry[i])
@@ -129,25 +132,25 @@ export default function Home() {
             console.log(deletepath)
             //TODO connect API Remove
             let target = ""
-            if (dir === '/'){
-                target ="/" + datarry[i].name
+            if (dir === '/') {
+                target = "/" + datarry[i].name
             } else {
                 target = dir + "/" + datarry[i].name
             }
-            await axios.delete(baseURL+"/commands/", {data:{ absolute_path: target, command:"deleteOnePath" }},{ mode: 'cors' });
+            await axios.delete(baseURL + "/commands/", { data: { absolute_path: target, command: "deleteOnePath" } }, { mode: 'cors' });
             readData(dir)
-        } catch(err) {
+        } catch (err) {
             console.error(err)
         }
-       
+
     };
 
     //click on the box and go into the subdirectory ls
-    const handleClick = async(i) => {
+    const handleClick = async (i) => {
         console.log(dir)
         let newUrl = ""
-        if (dir === '/'){
-            newUrl ="/" + datarry[i].name
+        if (dir === '/') {
+            newUrl = "/" + datarry[i].name
         } else {
             newUrl = dir + "/" + datarry[i].name
         }
@@ -203,6 +206,7 @@ export default function Home() {
             <Nav
                 currentdirectory={loc}
                 goback={() => handleGoback()}
+                database="「SQL」"
             />
             <div className="row">
                 <div className="left">

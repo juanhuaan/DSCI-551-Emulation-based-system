@@ -8,19 +8,25 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import Menu from "./components/Menu"
+// import Nav from 'react-bootstrap/Nav';
 
 
 
 export default function App() {
   //html display
   return (
+
+
     <Router>
+      <Menu />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/firebase" element={<HomeFB />} />
         <Route path="/analyze" element={<Analyze />} />
       </Routes>
     </Router>
+
 
   )
 }
