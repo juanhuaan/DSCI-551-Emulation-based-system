@@ -1,3 +1,5 @@
+//In this file the Firebase backend are connected to the frontend
+
 import React, { useState } from "react";
 import Box from "./components/Box";
 import Nav from "./components/Nav";
@@ -6,8 +8,6 @@ import "./Home.css"
 import { Link } from "react-router-dom";
 import { db } from './firebase'
 import { ref, set, onValue, remove } from "firebase/database";
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
 
 export default function Home() {
     const [datarry, setdatarry] = React.useState([])
