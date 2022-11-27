@@ -38,4 +38,9 @@
 
 label {
   margin-right: 10px;
+  margin-left: 10px;
+}
+
+span {
+  margin-left: 10px;
 }

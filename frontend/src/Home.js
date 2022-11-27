@@ -63,9 +63,10 @@ export default function Home() {
             newUrl = dir + "/" + file
         }
         const res = await fetch(baseURL + `/commands/?command=cat&absolute_path=${newUrl}`, { mode: 'cors' })
-        const data = await res.json();
+        const pre = await res.json();
+        const data = JSON.parse(pre)
         console.log(data)
-        // setFileContent(data[0, 5])
+        setFileContent(data.slice(0, 5))
     }
 
     /* end of API call */

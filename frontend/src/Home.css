@@ -23,6 +23,10 @@
   flex: 10%
 }
 
+.ananav {
+  margin-top: 20px;
+}
+
 .App .openModalBtn {
   width: 200px;
   height: 40px;
@@ -36,4 +40,9 @@
 body {
   padding: 0;
   margin: 0;
+}
+
+.intro {
+  margin-left: 20px;
+  margin-top: 20px;
 }
