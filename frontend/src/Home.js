@@ -215,8 +215,7 @@ export default function Home() {
                     <p>-------------------------------------------------------------------------</p>
 
                     {/* input form */}
-                    <form className="iform" onSubmit={e => handleSubmit(e)}>
-                        <label htmlFor="name">Please input the name of File/Directory</label>
+                    <form className="iform" onSubmit={e => handleSubmit(e)}>                                                                                                                                                                                                                                                <label htmlFor="name">Please input the name of File/Directory</label>
                         <input
                             type="text"
                             placeholder="name"
