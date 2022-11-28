@@ -97,8 +97,6 @@ class AllView(APIView):
                                    score = data['rating'])
         new.save()
     
-    
-
 class RestView(AllView):
     
     k = 3
@@ -363,6 +361,10 @@ class MapView(AllView):
     
     Funtion: find top k review number restaurant
     URL: localhost:8000/api/mapreduce/?dataSet=restaurants&top_review_num=3
+    
+    
+    Fuction: find population greater than/ equal than num_pop city
+    URL: localhost:8000/api/mapreduce/?dataSet=city&pop_choice=greater&pop=300000
     """
     def get(self, request, format=None):
         dataSet = request.query_params.get('dataSet')
@@ -370,6 +372,31 @@ class MapView(AllView):
         city = request.query_params.get('city')
         top_review_num = request.query_params.get('top_review_num')
         res = []
+        pop_choice = request.query_params.get('pop_choice');
+        num_pop_min = request.query_params.get('pop');
+        num_pop_max = request.query_params.get('pop');
+        if (dataSet == 'city' and pop_choice!= None):
+            if (pop_choice == "greater"):
+                num_pop = int(num_pop_max)
+                c0 = City0.objects.filter(population__gt=num_pop)
+                c1 = City1.objects.filter(population__gt=num_pop)
+                c2 = City2.objects.filter(population__gt=num_pop)
+            if (pop_choice == "smaller"):
+                num_pop = int(num_pop_min)
+                c0 = City0.objects.filter(population__lt=num_pop)
+                c1 = City1.objects.filter(population__lt=num_pop)
+                c2 = City2.objects.filter(population__lt=num_pop)
+            temp = []
+            for obj in c0:
+                temp.append(obj)
+            for obj in c1:
+                temp.append(obj)
+            for obj in c2:
+                temp.append(obj) 
+            serializer = CitySpecsSerializer(temp, many = True)
+            return Response(serializer.data)
+            
+            
         if (dataSet == 'restaurants' and top_review_num!= None):
             topNum = int(top_review_num);
             r0 = Rest0.objects.order_by('-review_cnt')[:topNum]
@@ -481,7 +508,7 @@ class MapView(AllView):
          
         
    
-        
+    
         
             
             
