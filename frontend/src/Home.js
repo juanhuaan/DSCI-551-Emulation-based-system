@@ -46,8 +46,7 @@ export default function Home() {
             })
         }
         // console.log(data[0].inode)
-        console.log("in read")
-        console.log(curdata)
+        // console.log(curdata)
         setdatarry(curdata)
         // console.log(datarry)
     }
@@ -64,7 +63,7 @@ export default function Home() {
         }
         const res = await fetch(baseURL + `/commands/?command=cat&absolute_path=${newUrl}`, { mode: 'cors' })
         const pre = await res.json();
-        const data = JSON.parse(pre)
+        const data = JSON.parse(pre);
         console.log(data)
         setFileContent(data.slice(0, 5))
     }
@@ -75,7 +74,7 @@ export default function Home() {
     React.useEffect(() => {
         // console.log("effect run");
         readData(dir)
-    }, [])
+    }, [dir, inputobj])
 
 
     if (datarry === null) {
@@ -195,6 +194,10 @@ export default function Home() {
             />
         )
     })
+
+
+
+
 
     //html display
     return (
