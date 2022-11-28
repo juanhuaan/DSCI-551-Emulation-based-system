@@ -28,7 +28,7 @@ export default function App() {
         <Route path="/analyze/rescity" element={<Analyze1 />} />
         <Route path="/analyze/reviewcount" element={<Analyze2 />} />
         <Route path="/analyze/populationrest" element={<Analyze3 />} />
-        <Route path="/analyze/analyze4" element={<Analyze4 />} />
+        <Route path="/analyze/citypopulation" element={<Analyze4 />} />
       </Routes>
     </Router>
   )
