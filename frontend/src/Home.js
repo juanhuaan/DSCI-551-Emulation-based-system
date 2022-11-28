@@ -184,8 +184,6 @@ export default function Home() {
 
     //list of boxes 
     const arrayelements = datarry.map(item => {
-        console.log("in map")
-        console.log(datarry)
         return (
             <Box
                 key={item.id}

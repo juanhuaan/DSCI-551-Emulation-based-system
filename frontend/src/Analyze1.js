@@ -5,7 +5,6 @@ import { useState } from "react";
 import { fetchPlace } from "./fetchPlace";
 import "./Home.css"
 import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
 
 export default function Analyze1(props) {
     const [city, setCity] = useState("");

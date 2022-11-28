@@ -22,7 +22,6 @@ function TabsExample() {
                     {/* <Link to="/analyze">Go analyzation</Link> */}
                     Go Analyzation
                 </Nav.Link>
-
             </Nav.Item>
         </Nav>
     );
