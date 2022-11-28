@@ -38,6 +38,7 @@ export default function Analyze3(props) {
         let newarr = []
         for (let i = 0; i < jsonarray.length; i++) {
             newarr.push({
+                id: newarr.length,
                 name: jsonarray[i].name,
                 rank: jsonarray[i].rank,
                 population: jsonarray[i].population,
@@ -89,7 +90,7 @@ export default function Analyze3(props) {
             </form>
             <br />
             {submit && <div className="result table">
-                <table class="table table-striped">
+                <table>
                     <thead>
                         <tr>
                             <th>Name</th>
