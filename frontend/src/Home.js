@@ -39,9 +39,9 @@ export default function Home() {
         // console.log(data)
         for (let i = 0; i < data.length; i++) {
             // console.log(data[i])
-            curdata.push ({
-                id : curdata.length,
-                isfile: data[i].pathType === "FILE"?true:false,
+            curdata.push({
+                id: curdata.length,
+                isfile: data[i].pathType === "FILE" ? true : false,
                 name: data[i].name
             })
         }
@@ -61,12 +61,12 @@ export default function Home() {
         } else {
             newUrl = dir + "/" + file
         }
-        const res = await fetch(baseURL+`/commands/?command=cat&absolute_path=${newUrl}`,{ mode: 'cors' })
+        const res = await fetch(baseURL + `/commands/?command=cat&absolute_path=${newUrl}`, { mode: 'cors' })
         const pre = await res.json();
         const data = JSON.parse(pre);
         console.log(data)
-        setFileContent(data.slice(0,5))
-    } 
+        setFileContent(data.slice(0, 5))
+    }
 
     /* end of API call */
 
@@ -115,7 +115,7 @@ export default function Home() {
                 await axios.post(baseURL + `/commands/`, { absolute_path: newUrl, type: "DIRECTORY", command: "mkdir_or_put" })
             }
             // readData(dir)
-        } catch(e){
+        } catch (e) {
             console.error(e)
         }
         console.log("in submit")
@@ -183,7 +183,6 @@ export default function Home() {
 
     //list of boxes 
     const arrayelements = datarry.map(item => {
-        console.log(datarry)
         return (
             <Box
                 key={item.id}
@@ -196,9 +195,9 @@ export default function Home() {
         )
     })
 
-    
-   
-   
+
+
+
 
     //html display
     return (

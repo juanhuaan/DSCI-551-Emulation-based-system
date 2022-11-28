@@ -2,10 +2,7 @@ import axios from "axios"
 import React from "react"
 import AnalyzeNav from "./components/AnalyzeNav";
 import { useState } from "react";
-import { fetchPlace } from "./fetchPlace";
 import "./Home.css"
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
 
 export default function Analyze2(props) {
     const baseURL = "http://127.0.0.1:8000/api"

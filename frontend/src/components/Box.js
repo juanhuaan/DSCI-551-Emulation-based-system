@@ -8,8 +8,6 @@ export default function Box(props) {
     // const styles = {
     //     background: props.isfile === true ? "url('./images/file.png') no-repeat top left" : "url('./images/folder.png') no-repeat top left"
     // }
-
-
     return (
         <div className="box" onDoubleClick={props.isfile === true ? props.openmodal : props.next}>
             <div>
